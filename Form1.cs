@@ -67,14 +67,15 @@ namespace WindowsFormsApp1
 
                     connection.Open();
                     
-                    OracleCommand command = new OracleCommand("SELECT ID,KAPASITE_RAPORU_ID,BASVURU_NO FROM SBS.FIR_BASV WHERE BASVURU_NO IN (" + paremeterBasvuruNo.Text + ")", connection);
+                    OracleCommand command = new OracleCommand($"SELECT  fb.ID, kr.KAPASITE_NO, fb.BASVURU_NO,fb.KAPASITE_RAPORU_ID \r\nFROM KAPST_RAP kr " +
+                                                              $"INNER JOIN   FIR_BASV fb ON KR.ID = FB.KAPASITE_RAPORU_ID \r\n " +
+                                                              $"WHERE BASVURU_NO IN (" + paremeterBasvuruNo.Text + ")", connection);
                     OracleDataReader rdr = command.ExecuteReader();
 
                     while (rdr.Read())
                     {
-                      
-                        Logger.Info($"FIR_BASV Data - Id : {rdr.GetString(0)} KapasiteRaporuId : {rdr.GetString(1)}" +
-                                     $" Basvuru No : {rdr.GetString(2)}");
+                        Logger.Info($"Case-1 Bas | ID : {rdr.GetString(0)} KAPASITE_NO : {rdr.GetString(1)}" +
+                                     $" BASVURU_NO : {rdr.GetString(2)}");
 
                         bool isSuccess1 = long.TryParse(rdr.GetString(0), out long firmaBasvuruId);
                         bool isSuccess2 = long.TryParse(rdr.GetString(1), out long kapasiteNo);
@@ -126,8 +127,8 @@ namespace WindowsFormsApp1
 
                                     // Commit the transaction
                                     transaction.Commit();
-                                    Logger.Info($"COMMIT DONE! FIR_BASV Data - Id : {rdr.GetString(0)}");
-                                    MessageBox.Show("Transaction committed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    Logger.Info($"Case-1 Bas | ID : {rdr.GetString(0)} KAPASITE_NO : {rdr.GetString(1)}" + $" BASVURU_NO : {rdr.GetString(2)}");
+                                    
                                 }
                                 catch (Exception ex)
                                 {
@@ -137,11 +138,10 @@ namespace WindowsFormsApp1
                                 }
                             }
                         }
-
-                        rdr.Dispose();
-                        command.Dispose();
                     }
-        
+                    MessageBox.Show("Transaction committed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    rdr.Dispose();
+                    command.Dispose();
                 }
             }
             catch (Exception ex)
@@ -252,7 +252,7 @@ namespace WindowsFormsApp1
                 {
                     connection.Open();
 
-                    OracleCommand command = new OracleCommand(" SELECT ID,KAPASITE_RAPORU_ID,BASVURU_NO "+
+                    OracleCommand command = new OracleCommand(" SELECT ID,KAPASITE_NO,BASVURU_NO " +
                                                               " FROM SBS.FIR_BASV WHERE BASVURU_NO IN (" + paremeterBasvuruNo.Text + ")", connection);
                     OracleDataReader rdr = command.ExecuteReader();
 
