@@ -6,12 +6,15 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NLog;
 using Oracle.ManagedDataAccess.Client;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace WindowsFormsApp1
 {
@@ -32,6 +35,7 @@ namespace WindowsFormsApp1
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            CheckForIllegalCrossThreadCalls = false;
             // Optional: Add any initialization code here
         }
 
@@ -63,72 +67,81 @@ namespace WindowsFormsApp1
 
                     connection.Open();
                     
-                    OracleCommand command = new OracleCommand("SELECT ID,KAPASITE_RAPORU_ID FROM SBS.FIR_BASV WHERE BASVURU_NO IN (" + paremeterBasvuruNo.Text + ")", connection);
+                    OracleCommand command = new OracleCommand("SELECT ID,KAPASITE_RAPORU_ID,BASVURU_NO FROM SBS.FIR_BASV WHERE BASVURU_NO IN (" + paremeterBasvuruNo.Text + ")", connection);
                     OracleDataReader rdr = command.ExecuteReader();
 
                     while (rdr.Read())
                     {
-                        //MessageBox.Show($"FIR_BASV Data - Id : {rdr.GetString(0)} KapasiteRaporuId : {rdr.GetString(1)}");
-                        Logger.Info($"FIR_BASV Data - Id : {rdr.GetString(0)} KapasiteRaporuId : {rdr.GetString(1)}");
+                      
+                        Logger.Info($"FIR_BASV Data - Id : {rdr.GetString(0)} KapasiteRaporuId : {rdr.GetString(1)}" +
+                                     $" Basvuru No : {rdr.GetString(2)}");
 
-                        // Begin transaction
-                        using (OracleTransaction transaction = connection.BeginTransaction())
+                        bool isSuccess1 = long.TryParse(rdr.GetString(0), out long firmaBasvuruId);
+                        bool isSuccess2 = long.TryParse(rdr.GetString(1), out long kapasiteNo);
+
+                        var result = PostAsync(firmaBasvuruId, kapasiteNo).GetAwaiter().GetResult();
+
+                        var data = (JObject)JsonConvert.DeserializeObject(result);
+                        textBox3.Text = data["sonuc"].Value<string>();
+
+                        if (textBox3.Text == "0")
                         {
-                            try
+                            // Begin transaction
+                            using (OracleTransaction transaction = connection.BeginTransaction())
                             {
-                                // Execute first command
-                                //using (OracleCommand commandbasvIsl = new OracleCommand("DELETE FROM SBS.FIR_BAS_ISL WHERE FIRMA_BASVURU_ID = " + rdr.GetString(0) + " AND BASVURU_DURUM_ID IN ( 16 , 24 ) ", connection))
-                                //{
-                                //    commandbasvIsl.Transaction = transaction;
-                                //    commandbasvIsl.ExecuteNonQuery();
-                                //}
-                                //Logger.Info($"DELETE DONE! FIR_BASV Data - Id : {rdr.GetString(0)}");
-                                //MessageBox.Show($"FIR_BASV Data - Id : {rdr.GetString(0)} KapasiteRaporuId : {rdr.GetString(1)}");
-
-                                // Execute second command
-                                using (OracleCommand commandOdaEksper = new OracleCommand("UPDATE FIR_BASV_IMZA_JOB SET JOB_STATUS = 'PENDING' WHERE  FIRMA_BASVURU_ID = " + rdr.GetString(0) + " AND ROL = 'ODA_EKSPER'", connection))
+                                try
                                 {
-                                    commandOdaEksper.Transaction = transaction;
-                                    commandOdaEksper.ExecuteNonQuery();
+                                    // Execute first command
+                                    //using (OracleCommand commandbasvIsl = new OracleCommand("DELETE FROM SBS.FIR_BAS_ISL WHERE FIRMA_BASVURU_ID = " + rdr.GetString(0) + " AND BASVURU_DURUM_ID IN ( 16 , 24 ) ", connection))
+                                    //{
+                                    //    commandbasvIsl.Transaction = transaction;
+                                    //    commandbasvIsl.ExecuteNonQuery();
+                                    //}
+                                    //Logger.Info($"DELETE DONE! FIR_BASV Data - Id : {rdr.GetString(0)}");
+                                    //MessageBox.Show($"FIR_BASV Data - Id : {rdr.GetString(0)} KapasiteRaporuId : {rdr.GetString(1)}");
+
+                                    // Execute second command
+                                    using (OracleCommand commandOdaEksper = new OracleCommand("UPDATE FIR_BASV_IMZA_JOB SET JOB_STATUS = 'PENDING' WHERE  FIRMA_BASVURU_ID = " + rdr.GetString(0) + " AND ROL = 'ODA_EKSPER'", connection))
+                                    {
+                                        commandOdaEksper.Transaction = transaction;
+                                        commandOdaEksper.ExecuteNonQuery();
+                                    }
+                                    Logger.Info($"EKSPER IMZA UPDATE DONE! FIR_BASV Data - Id : {rdr.GetString(0)}");
+                                    // Execute third command
+                                    using (OracleCommand commandOdaYonetici = new OracleCommand("UPDATE FIR_BASV_IMZA_JOB SET JOB_STATUS = 'NOT_ASSIGNED' WHERE  FIRMA_BASVURU_ID = " + rdr.GetString(0) + " AND ROL = 'ODA_YONETICI'", connection))
+                                    {
+                                        commandOdaYonetici.Transaction = transaction;
+                                        commandOdaYonetici.ExecuteNonQuery();
+                                    }
+                                    Logger.Info($"ODA IMZA UPDATE DONE! FIR_BASV Data - Id : {rdr.GetString(0)}");
+                                    // Execute fourth command
+                                    using (OracleCommand commandTobbYonetici = new OracleCommand("UPDATE FIR_BASV_IMZA_JOB SET JOB_STATUS = 'NOT_ASSIGNED' WHERE  FIRMA_BASVURU_ID = " + rdr.GetString(0) + " AND ROL='TOBB_YONETICI'", connection))
+                                    {
+                                        commandTobbYonetici.Transaction = transaction;
+                                        commandTobbYonetici.ExecuteNonQuery();
+                                    }
+
+                                    Logger.Info($"TOBB IMZA UPDATE DONE! FIR_BASV Data - Id : {rdr.GetString(0)}");
+
+
+                                    // Commit the transaction
+                                    transaction.Commit();
+                                    Logger.Info($"COMMIT DONE! FIR_BASV Data - Id : {rdr.GetString(0)}");
+                                    MessageBox.Show("Transaction committed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
-                                Logger.Info($"EKSPER IMZA UPDATE DONE! FIR_BASV Data - Id : {rdr.GetString(0)}");
-                                // Execute third command
-                                using (OracleCommand commandOdaYonetici = new OracleCommand("UPDATE FIR_BASV_IMZA_JOB SET JOB_STATUS = 'NOT_ASSIGNED' WHERE  FIRMA_BASVURU_ID = " + rdr.GetString(0) + " AND ROL = 'ODA_YONETICI'", connection))
+                                catch (Exception ex)
                                 {
-                                    commandOdaYonetici.Transaction = transaction;
-                                    commandOdaYonetici.ExecuteNonQuery();
+                                    // Rollback the transaction in case of an error
+                                    transaction.Rollback();
+                                    Logger.Error(ex, $"Transaction rolled back due to error: {ex.Message}");
                                 }
-                                Logger.Info($"ODA IMZA UPDATE DONE! FIR_BASV Data - Id : {rdr.GetString(0)}");
-                                // Execute fourth command
-                                using (OracleCommand commandTobbYonetici = new OracleCommand("UPDATE FIR_BASV_IMZA_JOB SET JOB_STATUS = 'NOT_ASSIGNED' WHERE  FIRMA_BASVURU_ID = " + rdr.GetString(0) + " AND ROL='TOBB_YONETICI'", connection))
-                                {
-                                    commandTobbYonetici.Transaction = transaction;
-                                    commandTobbYonetici.ExecuteNonQuery();
-                                }
-
-                                Logger.Info($"TOBB IMZA UPDATE DONE! FIR_BASV Data - Id : {rdr.GetString(0)}");
-
-                                bool isSuccess = long.TryParse(rdr.GetString(0), out long Sayi);
-                                readyrequstData(Sayi, rdr.GetString(1)).GetAwaiter().GetResult();
-
-                                // Commit the transaction
-                                transaction.Commit();
-                                Logger.Info($"COMMIT DONE! FIR_BASV Data - Id : {rdr.GetString(0)}");
-                                MessageBox.Show("Transaction committed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                            catch (Exception ex)
-                            {
-                                // Rollback the transaction in case of an error
-                                transaction.Rollback();
-                                Logger.Error(ex, $"Transaction rolled back due to error: {ex.Message}");
                             }
                         }
-                    }
-                 
-                    rdr.Dispose();
-                    command.Dispose();
 
-                    Console.WriteLine("Both records are written to database.");
+                        rdr.Dispose();
+                        command.Dispose();
+                    }
+        
                 }
             }
             catch (Exception ex)
@@ -138,96 +151,71 @@ namespace WindowsFormsApp1
             }
         }
 
-        private async Task readyrequstData(long firmaBasvuruIds, string kapasiteNos)
+        public async Task<string> PostAsync(long firmaBasvuruId, long kapasiteNo)
         {
-            try
+            object mydata = new
             {
-                string token = "Bearer " + tokenn.Text + ""; // Bearer Token buraya gelecek
-                var requestData = new
-                {
-                    rapor = 26,
-                    raporFormat = 0,
-                    firmaBasvuruId = firmaBasvuruIds, //917832,
-                    kapasiteNo = kapasiteNos //"1005154"
-                };
-               
-                string response = await SendPostRequest("https://sanayi.org.tr/api/prepare-capacity-report", requestData, token);
-               
-               
-                Logger.Info("", $" API CALL readyrequstData : +++++++++ response : {response.ToString()} firmaBasvuruIds : {firmaBasvuruIds} kapasiteNos : {kapasiteNos}");
+                rapor = 26,
+                raporFormat = 0,
+                firmaBasvuruId = firmaBasvuruId,
+                kapasiteNo = kapasiteNo
+            };
 
-            }
-            catch (Exception ex)
+            var httpRequestMessage = new HttpRequestMessage
             {
-                Logger.Error("readyrequstData Unexpected Error : response ",  ex.Message);
+                Content = new StringContent(JsonConvert.SerializeObject(mydata), Encoding.UTF8, "application/json")
+            };
+
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenn.Text);
+
+            httpRequestMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            using (HttpResponseMessage res = await client.PostAsync("https://sanayi.org.tr/api/prepare-capacity-report", httpRequestMessage.Content).ConfigureAwait(false))
+            {
+                using (HttpContent content = res.Content)
+                {
+                    string data = await content.ReadAsStringAsync();
+                    if (data != null)
+                    {
+                        textBox3.Text = data;
+                    }
+                    return data;
+                }
             }
         }
-
-        private async Task<string> SendPostRequest(string url, object data, string token)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                try
-                {
-                    // Token'ı Authorization Header'a ekle
-                    client.DefaultRequestHeaders.Add("Authorization", token);
-
-                    //// Gönderilecek JSON verisini oluştur
-                    string jsonData = System.Text.Json.JsonSerializer.Serialize(data);
-                    var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-                    // POST isteğini gönder ve yanıtı al
-                    HttpResponseMessage response =  client.PostAsync(url, content).GetAwaiter().GetResult();
-
-                    Logger.Info("SendPostRequest: response ", response);
-                    //MessageBox.Show("response : " + response);
-                    // Başarısız durum kodlarında hata fırlat
-                    response.EnsureSuccessStatusCode();
-
-                    // Yanıtı string olarak oku
-                    return await response.Content.ReadAsStringAsync();
-                }
-                catch (Exception  ex)
-                {
-                    Logger.Error("SendPostRequest Unexpected Error : response ", ex.Message);
-                    //MessageBox.Show("SendPostRequest ex : " + ex.Message);
-                    return (ex.Message);
-                }
-             
-            }  
-        }
-
-
+ 
+    
         private void btnExecute_Click(object sender, EventArgs e)
         {
-            string query = txtQuery.Text;
+         
 
-            if (string.IsNullOrWhiteSpace(query))
-            {
-                MessageBox.Show("Please enter a valid SQL query.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            //if (string.IsNullOrWhiteSpace(query))
+            //{
+            //    MessageBox.Show("Please enter a valid SQL query.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            //}
 
-            query = "SELECT * FROM SBS.FIR_BASV WHERE BASVURU_NO IN (" + paremeterBasvuruNo.Text + ")";
+            //query = "SELECT * FROM SBS.FIR_BASV WHERE BASVURU_NO IN (" + paremeterBasvuruNo.Text + ")";
 
-            try
-            {
-                using (OracleConnection connection = new OracleConnection(connectionString))
-                {
-                    connection.Open();
-                    OracleCommand command = new OracleCommand(query, connection);
+            //try
+            //{
+            //    using (OracleConnection connection = new OracleConnection(connectionString))
+            //    {
+            //        connection.Open();
+            //        OracleCommand command = new OracleCommand(query, connection);
 
-                    OracleDataAdapter adapter = new OracleDataAdapter(command);
-                    DataTable dataTable = new DataTable();
-                    adapter.Fill(dataTable);
+            //        OracleDataAdapter adapter = new OracleDataAdapter(command);
+            //        DataTable dataTable = new DataTable();
+            //        adapter.Fill(dataTable);
 
-                    dataGridResults.DataSource = dataTable;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //        dataGridResults.DataSource = dataTable;
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -237,7 +225,10 @@ namespace WindowsFormsApp1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            readyrequstData(914069, "1000813").GetAwaiter().GetResult();
+            textBox3.Text = "";
+            var result = PostAsync(914158, 1001276).GetAwaiter().GetResult();
+            var data =(JObject)JsonConvert.DeserializeObject(result);
+            textBox3.Text = data["sonuc"].Value<string>();
         }
 
 
@@ -261,13 +252,25 @@ namespace WindowsFormsApp1
                 {
                     connection.Open();
 
-                    OracleCommand command = new OracleCommand("SELECT ID,KAPASITE_RAPORU_ID FROM SBS.FIR_BASV WHERE BASVURU_NO IN (" + paremeterBasvuruNo.Text + ")", connection);
+                    OracleCommand command = new OracleCommand(" SELECT ID,KAPASITE_RAPORU_ID,BASVURU_NO "+
+                                                              " FROM SBS.FIR_BASV WHERE BASVURU_NO IN (" + paremeterBasvuruNo.Text + ")", connection);
                     OracleDataReader rdr = command.ExecuteReader();
 
                     while (rdr.Read())
                     {
-                        bool isSuccess = long.TryParse(rdr.GetString(0), out long Sayi);
-                        readyrequstData(Sayi, rdr.GetString(1)).GetAwaiter().GetResult();
+                        Logger.Info($" Case_2 Bas - Id : {rdr.GetString(0)} KapasiteRaporuId : {rdr.GetString(1)}" +
+                                    $" Basvuru No : {rdr.GetString(2)}");
+
+                        bool isSuccess1 = long.TryParse(rdr.GetString(0), out long firmaBasvuruId);
+                        bool isSuccess2 = long.TryParse(rdr.GetString(1), out long kapasiteNo);
+
+                        var result = PostAsync(firmaBasvuruId, kapasiteNo).GetAwaiter().GetResult();
+
+                        var data = (JObject)JsonConvert.DeserializeObject(result);
+                        textBox3.Text = data["sonuc"].Value<string>();
+
+                        Logger.Info($" Case_2 Son - Id : {rdr.GetString(0)} KapasiteRaporuId : {rdr.GetString(1)}" +
+                         $" Basvuru No : {rdr.GetString(2)}");
                     }
 
                     rdr.Dispose();
@@ -302,7 +305,7 @@ namespace WindowsFormsApp1
                     while (rdr.Read())
                     {
                         bool isSuccess = long.TryParse(rdr.GetString(0), out long Sayi);
-                        readyrequstData(Sayi, rdr.GetString(1)).GetAwaiter().GetResult();
+                     //   PostAsync(Sayi, rdr.GetString(1)).GetAwaiter().GetResult();
                     }
 
                     rdr.Dispose();
@@ -322,5 +325,13 @@ namespace WindowsFormsApp1
         {
             Case_3();
         }
+    }
+
+    public class Datas
+    {
+        public int rapor { get; set; }
+        public int raporFormat { get; set; }
+        public long firmaBasvuruId { get; set; }
+        public string kapasiteNo { get; set; }
     }
 }
