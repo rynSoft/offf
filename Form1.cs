@@ -62,7 +62,7 @@ namespace WindowsFormsApp1
                 {
 
                     connection.Open();
-
+                    
                     OracleCommand command = new OracleCommand("SELECT ID,KAPASITE_RAPORU_ID FROM SBS.FIR_BASV WHERE BASVURU_NO IN (" + paremeterBasvuruNo.Text + ")", connection);
                     OracleDataReader rdr = command.ExecuteReader();
 
@@ -77,12 +77,13 @@ namespace WindowsFormsApp1
                             try
                             {
                                 // Execute first command
-                                using (OracleCommand commandbasvIsl = new OracleCommand("DELETE FROM SBS.FIR_BASV_ISL WHERE FIRMA_BASVURU_ID = " + rdr.GetString(0) + " AND BASVURU_DURUM_ID IN ( 16 , 24 ) ", connection))
-                                {
-                                    commandbasvIsl.Transaction = transaction;
-                                    commandbasvIsl.ExecuteNonQuery();
-                                }
-                                MessageBox.Show($"FIR_BASV Data - Id : {rdr.GetString(0)} KapasiteRaporuId : {rdr.GetString(1)}");
+                                //using (OracleCommand commandbasvIsl = new OracleCommand("DELETE FROM SBS.FIR_BAS_ISL WHERE FIRMA_BASVURU_ID = " + rdr.GetString(0) + " AND BASVURU_DURUM_ID IN ( 16 , 24 ) ", connection))
+                                //{
+                                //    commandbasvIsl.Transaction = transaction;
+                                //    commandbasvIsl.ExecuteNonQuery();
+                                //}
+                                //Logger.Info($"DELETE DONE! FIR_BASV Data - Id : {rdr.GetString(0)}");
+                                //MessageBox.Show($"FIR_BASV Data - Id : {rdr.GetString(0)} KapasiteRaporuId : {rdr.GetString(1)}");
 
                                 // Execute second command
                                 using (OracleCommand commandOdaEksper = new OracleCommand("UPDATE FIR_BASV_IMZA_JOB SET JOB_STATUS = 'PENDING' WHERE  FIRMA_BASVURU_ID = " + rdr.GetString(0) + " AND ROL = 'ODA_EKSPER'", connection))
@@ -90,14 +91,14 @@ namespace WindowsFormsApp1
                                     commandOdaEksper.Transaction = transaction;
                                     commandOdaEksper.ExecuteNonQuery();
                                 }
-
+                                Logger.Info($"EKSPER IMZA UPDATE DONE! FIR_BASV Data - Id : {rdr.GetString(0)}");
                                 // Execute third command
                                 using (OracleCommand commandOdaYonetici = new OracleCommand("UPDATE FIR_BASV_IMZA_JOB SET JOB_STATUS = 'NOT_ASSIGNED' WHERE  FIRMA_BASVURU_ID = " + rdr.GetString(0) + " AND ROL = 'ODA_YONETICI'", connection))
                                 {
                                     commandOdaYonetici.Transaction = transaction;
                                     commandOdaYonetici.ExecuteNonQuery();
                                 }
-
+                                Logger.Info($"ODA IMZA UPDATE DONE! FIR_BASV Data - Id : {rdr.GetString(0)}");
                                 // Execute fourth command
                                 using (OracleCommand commandTobbYonetici = new OracleCommand("UPDATE FIR_BASV_IMZA_JOB SET JOB_STATUS = 'NOT_ASSIGNED' WHERE  FIRMA_BASVURU_ID = " + rdr.GetString(0) + " AND ROL='TOBB_YONETICI'", connection))
                                 {
@@ -105,11 +106,14 @@ namespace WindowsFormsApp1
                                     commandTobbYonetici.ExecuteNonQuery();
                                 }
 
+                                Logger.Info($"TOBB IMZA UPDATE DONE! FIR_BASV Data - Id : {rdr.GetString(0)}");
+
                                 bool isSuccess = long.TryParse(rdr.GetString(0), out long Sayi);
                                 readyrequstData(Sayi, rdr.GetString(1)).GetAwaiter().GetResult();
 
                                 // Commit the transaction
                                 transaction.Commit();
+                                Logger.Info($"COMMIT DONE! FIR_BASV Data - Id : {rdr.GetString(0)}");
                                 MessageBox.Show("Transaction committed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
                             catch (Exception ex)
@@ -149,10 +153,8 @@ namespace WindowsFormsApp1
                
                 string response = await SendPostRequest("https://sanayi.org.tr/api/prepare-capacity-report", requestData, token);
                
-                if (string.IsNullOrEmpty(response))
-                   Logger.Info("", $"readyrequstData : ----------  response : {response} firmaBasvuruIds : {firmaBasvuruIds} kapasiteNos : {kapasiteNos} hata olustu...");
-                else
-                    Logger.Info("", $"readyrequstData : +++++++++ response : {response} firmaBasvuruIds : {firmaBasvuruIds} kapasiteNos : {kapasiteNos} tamamlandı...");
+               
+                Logger.Info("", $" API CALL readyrequstData : +++++++++ response : {response.ToString()} firmaBasvuruIds : {firmaBasvuruIds} kapasiteNos : {kapasiteNos}");
 
             }
             catch (Exception ex)
@@ -189,10 +191,10 @@ namespace WindowsFormsApp1
                 {
                     Logger.Error("SendPostRequest Unexpected Error : response ", ex.Message);
                     //MessageBox.Show("SendPostRequest ex : " + ex.Message);
+                    return (ex.Message);
                 }
              
             }  
-            return "";
         }
 
 
