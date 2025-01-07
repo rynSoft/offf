@@ -87,17 +87,19 @@
             // dataGridResults
             // 
             this.dataGridResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridResults.Location = new System.Drawing.Point(3, 73);
+            this.dataGridResults.Location = new System.Drawing.Point(6, 135);
+            this.dataGridResults.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.dataGridResults.Name = "dataGridResults";
             this.dataGridResults.RowHeadersWidth = 72;
-            this.dataGridResults.Size = new System.Drawing.Size(813, 306);
+            this.dataGridResults.Size = new System.Drawing.Size(1490, 565);
             this.dataGridResults.TabIndex = 9;
             // 
             // btnExecute
             // 
-            this.btnExecute.Location = new System.Drawing.Point(996, 605);
+            this.btnExecute.Location = new System.Drawing.Point(1826, 1117);
+            this.btnExecute.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnExecute.Name = "btnExecute";
-            this.btnExecute.Size = new System.Drawing.Size(88, 51);
+            this.btnExecute.Size = new System.Drawing.Size(161, 94);
             this.btnExecute.TabIndex = 8;
             this.btnExecute.Text = "Execute";
             this.btnExecute.UseVisualStyleBackColor = true;
@@ -105,10 +107,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(1012, 601);
-            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button2.Location = new System.Drawing.Point(1855, 1110);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(88, 48);
+            this.button2.Size = new System.Drawing.Size(161, 89);
             this.button2.TabIndex = 18;
             this.button2.Text = "createPdfFile";
             this.button2.UseVisualStyleBackColor = true;
@@ -116,18 +118,18 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(20, 26);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox1.Location = new System.Drawing.Point(37, 48);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(111, 20);
+            this.textBox1.Size = new System.Drawing.Size(200, 29);
             this.textBox1.TabIndex = 21;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(166, 26);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox2.Location = new System.Drawing.Point(304, 48);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(111, 20);
+            this.textBox2.Size = new System.Drawing.Size(200, 29);
             this.textBox2.TabIndex = 22;
             // 
             // panel1
@@ -136,50 +138,51 @@
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.textBox2);
             this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Location = new System.Drawing.Point(231, 751);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Location = new System.Drawing.Point(424, 1386);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(488, 73);
+            this.panel1.Size = new System.Drawing.Size(895, 135);
             this.panel1.TabIndex = 23;
             this.panel1.Visible = false;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(207, 7);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Location = new System.Drawing.Point(380, 13);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(47, 13);
+            this.label5.Size = new System.Drawing.Size(84, 25);
             this.label5.TabIndex = 24;
             this.label5.Text = "Token : ";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(49, 7);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Location = new System.Drawing.Point(90, 13);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(47, 13);
+            this.label4.Size = new System.Drawing.Size(84, 25);
             this.label4.TabIndex = 23;
             this.label4.Text = "Token : ";
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(55, 356);
+            this.textBox4.Location = new System.Drawing.Point(101, 657);
+            this.textBox4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.textBox4.Multiline = true;
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(649, 47);
+            this.textBox4.Size = new System.Drawing.Size(1186, 83);
             this.textBox4.TabIndex = 26;
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(7, 1);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControl1.Location = new System.Drawing.Point(13, 2);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(844, 641);
+            this.tabControl1.Size = new System.Drawing.Size(1547, 1183);
             this.tabControl1.TabIndex = 27;
             // 
             // tabPage1
@@ -192,11 +195,11 @@
             this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.paremeterBasvuruNo);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage1.Location = new System.Drawing.Point(4, 33);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tabPage1.Size = new System.Drawing.Size(836, 615);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Size = new System.Drawing.Size(1539, 1146);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -204,48 +207,52 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(105, 258);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label6.Location = new System.Drawing.Point(192, 476);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(38, 13);
+            this.label6.Size = new System.Drawing.Size(69, 25);
             this.label6.TabIndex = 33;
             this.label6.Text = "Sonuç";
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(155, 251);
+            this.textBox3.Location = new System.Drawing.Point(284, 463);
+            this.textBox3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(643, 28);
+            this.textBox3.Size = new System.Drawing.Size(1176, 48);
             this.textBox3.TabIndex = 32;
             // 
             // button3
             // 
             this.button3.BackColor = System.Drawing.Color.IndianRed;
-            this.button3.Location = new System.Drawing.Point(161, 341);
+            this.button3.Location = new System.Drawing.Point(295, 630);
+            this.button3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(604, 39);
+            this.button3.Size = new System.Drawing.Size(1107, 72);
             this.button3.TabIndex = 31;
             this.button3.Text = "Case 2 - Başvuru No Alanına virgül ile girilen ve E-imza olmamış durumda olan bel" +
     "geler yeniden oluşturulması sağlanır . ";
             this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(105, 162);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label3.Location = new System.Drawing.Point(192, 299);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(47, 13);
+            this.label3.Size = new System.Drawing.Size(84, 25);
             this.label3.TabIndex = 30;
             this.label3.Text = "Token : ";
             // 
             // tokenn
             // 
-            this.tokenn.Location = new System.Drawing.Point(155, 147);
+            this.tokenn.Location = new System.Drawing.Point(284, 271);
+            this.tokenn.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tokenn.Multiline = true;
             this.tokenn.Name = "tokenn";
-            this.tokenn.Size = new System.Drawing.Size(640, 47);
+            this.tokenn.Size = new System.Drawing.Size(1170, 83);
             this.tokenn.TabIndex = 29;
             this.tokenn.Text = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJfMjA0MTc4XyIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE3" +
     "MzMyMTA2ODV9.YQid2KJOBfWZf2jNBODI9esWGTkhRBKoib3GgZaRzq2UKAFb48Bu1avTLJCw2_3WJjd" +
@@ -254,28 +261,31 @@
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.Yellow;
-            this.button1.Location = new System.Drawing.Point(161, 302);
+            this.button1.Location = new System.Drawing.Point(295, 558);
+            this.button1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(604, 34);
+            this.button1.Size = new System.Drawing.Size(1107, 63);
             this.button1.TabIndex = 28;
             this.button1.Text = resources.GetString("button1.Text");
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // paremeterBasvuruNo
             // 
-            this.paremeterBasvuruNo.Location = new System.Drawing.Point(155, 199);
+            this.paremeterBasvuruNo.Location = new System.Drawing.Point(284, 367);
+            this.paremeterBasvuruNo.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.paremeterBasvuruNo.Multiline = true;
             this.paremeterBasvuruNo.Name = "paremeterBasvuruNo";
-            this.paremeterBasvuruNo.Size = new System.Drawing.Size(643, 30);
+            this.paremeterBasvuruNo.Size = new System.Drawing.Size(1176, 52);
             this.paremeterBasvuruNo.TabIndex = 27;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(83, 210);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(152, 388);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(69, 13);
+            this.label1.Size = new System.Drawing.Size(125, 25);
             this.label1.TabIndex = 26;
             this.label1.Text = "Başvuru No :";
             // 
@@ -285,11 +295,11 @@
             this.tabPage2.Controls.Add(this.groupBox3);
             this.tabPage2.Controls.Add(this.groupBox2);
             this.tabPage2.Controls.Add(this.groupBox1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage2.Location = new System.Drawing.Point(4, 33);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tabPage2.Size = new System.Drawing.Size(836, 615);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Size = new System.Drawing.Size(1539, 1146);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Veri Düzenle";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -300,11 +310,11 @@
             this.groupBox4.Controls.Add(this.label10);
             this.groupBox4.Controls.Add(this.panel3);
             this.groupBox4.Controls.Add(this.dataGridResults);
-            this.groupBox4.Location = new System.Drawing.Point(11, 166);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox4.Location = new System.Drawing.Point(20, 306);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox4.Size = new System.Drawing.Size(831, 395);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox4.Size = new System.Drawing.Size(1524, 729);
             this.groupBox4.TabIndex = 5;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Başvuru Nerede Sorusunun ve Eksper Raportür Kim ?";
@@ -315,36 +325,36 @@
             this.panel2.Controls.Add(this.label11);
             this.panel2.Controls.Add(this.kimlik);
             this.panel2.Controls.Add(this.button10);
-            this.panel2.Location = new System.Drawing.Point(489, 14);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Location = new System.Drawing.Point(896, 26);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(316, 54);
+            this.panel2.Size = new System.Drawing.Size(579, 100);
             this.panel2.TabIndex = 11;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(26, 7);
-            this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label11.Location = new System.Drawing.Point(48, 13);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(51, 13);
+            this.label11.Size = new System.Drawing.Size(94, 25);
             this.label11.TabIndex = 10;
             this.label11.Text = "Kimlik No";
             // 
             // kimlik
             // 
-            this.kimlik.Location = new System.Drawing.Point(28, 27);
-            this.kimlik.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.kimlik.Location = new System.Drawing.Point(51, 50);
+            this.kimlik.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.kimlik.Name = "kimlik";
-            this.kimlik.Size = new System.Drawing.Size(133, 20);
+            this.kimlik.Size = new System.Drawing.Size(240, 29);
             this.kimlik.TabIndex = 9;
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(178, 7);
-            this.button10.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button10.Location = new System.Drawing.Point(326, 13);
+            this.button10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(111, 36);
+            this.button10.Size = new System.Drawing.Size(204, 66);
             this.button10.TabIndex = 8;
             this.button10.Text = "Kullanıcı Kim";
             this.button10.UseVisualStyleBackColor = true;
@@ -353,10 +363,10 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(5, 19);
-            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label10.Location = new System.Drawing.Point(9, 35);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(63, 13);
+            this.label10.Size = new System.Drawing.Size(114, 25);
             this.label10.TabIndex = 4;
             this.label10.Text = "Başvuru No";
             // 
@@ -367,18 +377,18 @@
             this.panel3.Controls.Add(this.button8);
             this.panel3.Controls.Add(this.button7);
             this.panel3.Controls.Add(this.txtnerede);
-            this.panel3.Location = new System.Drawing.Point(0, 14);
-            this.panel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel3.Location = new System.Drawing.Point(0, 26);
+            this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(478, 54);
+            this.panel3.Size = new System.Drawing.Size(876, 100);
             this.panel3.TabIndex = 12;
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(325, 7);
-            this.button9.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button9.Location = new System.Drawing.Point(596, 13);
+            this.button9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(111, 36);
+            this.button9.Size = new System.Drawing.Size(204, 66);
             this.button9.TabIndex = 7;
             this.button9.Text = "Ekpser Raportör Kim";
             this.button9.UseVisualStyleBackColor = true;
@@ -386,10 +396,10 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(244, 7);
-            this.button8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button8.Location = new System.Drawing.Point(447, 13);
+            this.button8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(73, 36);
+            this.button8.Size = new System.Drawing.Size(134, 66);
             this.button8.TabIndex = 6;
             this.button8.Text = "YMB Nerede";
             this.button8.UseVisualStyleBackColor = true;
@@ -397,10 +407,10 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(153, 7);
-            this.button7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button7.Location = new System.Drawing.Point(280, 13);
+            this.button7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(87, 36);
+            this.button7.Size = new System.Drawing.Size(160, 66);
             this.button7.TabIndex = 2;
             this.button7.Text = "Skr Nerede";
             this.button7.UseVisualStyleBackColor = true;
@@ -408,10 +418,10 @@
             // 
             // txtnerede
             // 
-            this.txtnerede.Location = new System.Drawing.Point(3, 22);
-            this.txtnerede.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtnerede.Location = new System.Drawing.Point(6, 41);
+            this.txtnerede.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtnerede.Name = "txtnerede";
-            this.txtnerede.Size = new System.Drawing.Size(133, 20);
+            this.txtnerede.Size = new System.Drawing.Size(240, 29);
             this.txtnerede.TabIndex = 1;
             // 
             // groupBox3
@@ -420,11 +430,11 @@
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.button6);
             this.groupBox3.Controls.Add(this.aktifYapma);
-            this.groupBox3.Location = new System.Drawing.Point(574, 20);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Location = new System.Drawing.Point(1052, 37);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox3.Size = new System.Drawing.Size(268, 132);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox3.Size = new System.Drawing.Size(491, 244);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Blokaj veya pasife düştüğünde Raporu Aktif Yapmak";
@@ -432,19 +442,19 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(4, 38);
-            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label9.Location = new System.Drawing.Point(7, 70);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(63, 13);
+            this.label9.Size = new System.Drawing.Size(114, 25);
             this.label9.TabIndex = 4;
             this.label9.Text = "Başvuru No";
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(90, 62);
-            this.button6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button6.Location = new System.Drawing.Point(165, 114);
+            this.button6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(134, 55);
+            this.button6.Size = new System.Drawing.Size(246, 102);
             this.button6.TabIndex = 2;
             this.button6.Text = "Raporu Aktif Yap";
             this.button6.UseVisualStyleBackColor = true;
@@ -452,10 +462,10 @@
             // 
             // aktifYapma
             // 
-            this.aktifYapma.Location = new System.Drawing.Point(90, 38);
-            this.aktifYapma.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.aktifYapma.Location = new System.Drawing.Point(165, 70);
+            this.aktifYapma.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.aktifYapma.Name = "aktifYapma";
-            this.aktifYapma.Size = new System.Drawing.Size(133, 20);
+            this.aktifYapma.Size = new System.Drawing.Size(240, 29);
             this.aktifYapma.TabIndex = 1;
             // 
             // groupBox2
@@ -467,11 +477,11 @@
             this.groupBox2.Controls.Add(this.firmagelmeyen);
             this.groupBox2.Controls.Add(this.button5);
             this.groupBox2.ForeColor = System.Drawing.Color.Red;
-            this.groupBox2.Location = new System.Drawing.Point(263, 14);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Location = new System.Drawing.Point(482, 26);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox2.Size = new System.Drawing.Size(302, 138);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Size = new System.Drawing.Size(554, 255);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Başvurda Firma Bilgileri Gelmiyorsa";
@@ -479,45 +489,45 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(44, 22);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Location = new System.Drawing.Point(81, 41);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 13);
+            this.label2.Size = new System.Drawing.Size(114, 25);
             this.label2.TabIndex = 12;
             this.label2.Text = "Başvuru No";
             // 
             // firmaBilgisi
             // 
-            this.firmaBilgisi.Location = new System.Drawing.Point(119, 21);
-            this.firmaBilgisi.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.firmaBilgisi.Location = new System.Drawing.Point(218, 39);
+            this.firmaBilgisi.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.firmaBilgisi.Name = "firmaBilgisi";
-            this.firmaBilgisi.Size = new System.Drawing.Size(133, 20);
+            this.firmaBilgisi.Size = new System.Drawing.Size(240, 29);
             this.firmaBilgisi.TabIndex = 11;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(8, 46);
-            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label8.Location = new System.Drawing.Point(15, 85);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(100, 13);
+            this.label8.Size = new System.Drawing.Size(181, 25);
             this.label8.TabIndex = 10;
             this.label8.Text = "Önceki Başvuru No";
             // 
             // firmagelmeyen
             // 
-            this.firmagelmeyen.Location = new System.Drawing.Point(119, 44);
-            this.firmagelmeyen.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.firmagelmeyen.Location = new System.Drawing.Point(218, 81);
+            this.firmagelmeyen.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.firmagelmeyen.Name = "firmagelmeyen";
-            this.firmagelmeyen.Size = new System.Drawing.Size(133, 20);
+            this.firmagelmeyen.Size = new System.Drawing.Size(240, 29);
             this.firmagelmeyen.TabIndex = 9;
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(119, 68);
-            this.button5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button5.Location = new System.Drawing.Point(218, 126);
+            this.button5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(134, 55);
+            this.button5.Size = new System.Drawing.Size(246, 102);
             this.button5.TabIndex = 8;
             this.button5.Text = "Firma Bilgisi Gelmeyen Başvuruyu Düzenle";
             this.button5.UseVisualStyleBackColor = true;
@@ -529,11 +539,11 @@
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.button4);
             this.groupBox1.Controls.Add(this.personelTxt);
-            this.groupBox1.Location = new System.Drawing.Point(11, 14);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Location = new System.Drawing.Point(20, 26);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox1.Size = new System.Drawing.Size(249, 138);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Size = new System.Drawing.Size(456, 255);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Personel Sayıları Düzenleme";
@@ -541,19 +551,19 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(5, 23);
-            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label7.Location = new System.Drawing.Point(9, 42);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(63, 13);
+            this.label7.Size = new System.Drawing.Size(114, 25);
             this.label7.TabIndex = 4;
             this.label7.Text = "Başvuru No";
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(88, 46);
-            this.button4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button4.Location = new System.Drawing.Point(161, 85);
+            this.button4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(134, 55);
+            this.button4.Size = new System.Drawing.Size(246, 102);
             this.button4.TabIndex = 2;
             this.button4.Text = "Personel Sayıları Düzenle";
             this.button4.UseVisualStyleBackColor = true;
@@ -561,23 +571,24 @@
             // 
             // personelTxt
             // 
-            this.personelTxt.Location = new System.Drawing.Point(90, 21);
-            this.personelTxt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.personelTxt.Location = new System.Drawing.Point(165, 39);
+            this.personelTxt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.personelTxt.Name = "personelTxt";
-            this.personelTxt.Size = new System.Drawing.Size(133, 20);
+            this.personelTxt.Size = new System.Drawing.Size(240, 29);
             this.personelTxt.TabIndex = 1;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(857, 675);
+            this.ClientSize = new System.Drawing.Size(1571, 1246);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btnExecute);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "Form1";
             this.Text = "Oracle Database Query";
             this.Load += new System.EventHandler(this.Form1_Load);

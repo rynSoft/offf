@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Data;
 using System.Data.SqlClient;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading;
@@ -420,48 +422,40 @@ namespace WindowsFormsApp1
                                                               $" WHERE BASVURU_NO = " + personelTxt.Text, connection);
                     OracleDataReader rdr = command.ExecuteReader();
                     OracleDataReader rdr_2;
-                    OracleDataReader rdr_3;
-                    try
-                    {
 
-                        using (OracleCommand command_2 = new OracleCommand(" SELECT FB.ID FROM FIR_BASV FB " +
-                                                                           " WHERE FB.BASVURU_NO = (SELECT FB.ONCEKI_BASVURU_NO FROM FIR_BASV FB WHERE FB.ID = " + rdr.GetString(0) + ")", connection))
+                    while (rdr.Read())
+                        try
                         {
 
-                            rdr_2 = command_2.ExecuteReader();
-                        }
-                        Logger.Info($"rdr_2 : {rdr_2.GetString(0)}");
+                            //Logger.Info($"rdr : {rdr.GetString(0)}");
+                            OracleCommand command_2 = new OracleCommand(" SELECT FB.ID FROM FIR_BASV FB " +
+                                                                               " WHERE FB.BASVURU_NO = (SELECT FB.ONCEKI_BASVURU_NO " +
+                                                                               " FROM FIR_BASV FB WHERE FB.ID = " + rdr.GetString(0) + ")", connection);
+                            {
+                                Logger.Info($"rdr_2 cmd :{command_2.CommandText}");
+                                rdr_2 = command_2.ExecuteReader();
+                            }
+                            Logger.Info($"rdr_2 log 1");
 
-                        using (OracleCommand command_3 = new OracleCommand("SELECT ILTSM.ID FROM FIR_ILTS ILTSM INNER JOIN FIR_PERSONEL PERSONEL ON ILTSM.ID = PERSONEL.FIRMA_ILETISIM_ID  WHERE ILTSM.FIRMA_BASVURU_ID = " + rdr_2.GetString(0), connection))
+                            rdr_2.Read();
+                            if (rdr_2.HasRows)
+                            {
+                                var str_rdr_2 = rdr_2.GetString(0);
+                                Logger.Info($"rdr_2 log");
+                                personelUpdate(str_rdr_2, connection);
+                            }
+                            else
+                                MessageBox.Show("İlayda Hanımdan Başvurunun önceki başvuru nosunu alınız .Bir kahve karşılığında!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        }
+                        catch (Exception ex)
                         {
+                            // Rollback the transaction in case of an error
 
-                            rdr_3 = command_3.ExecuteReader();
+                            Logger.Error(ex, $"Transaction rolled back due to error: {ex.Message}");
                         }
-                        Logger.Info($"rdr_3 : {rdr_3.GetString(0)}");
-
-
-
-                        // Execute fourth command
-                        using (OracleCommand cmdupdate = new OracleCommand(" UPDATE FIR_ILTS SET " +
-                                                                           " VERI_GIRISI_YAPILDI_MI = 1 " +
-                                                                           " WHERE ID = " + rdr_3.GetString(0), connection))
-                        {
-                            cmdupdate.ExecuteNonQuery();
-                        }
-
-                        Logger.Info($"UPDATE FIR_ILTS SET : {rdr_3.GetString(0)}");
-                    }
-                    catch (Exception ex)
-                    {
-                        // Rollback the transaction in case of an error
-
-                        Logger.Error(ex, $"Transaction rolled back due to error: {ex.Message}");
-                    }
                 }
-
-
                 MessageBox.Show("Transaction committed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
 
             }
             catch (Exception ex)
@@ -470,6 +464,37 @@ namespace WindowsFormsApp1
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void personelUpdate(string id, OracleConnection conn)
+        {
+            Logger.Info($"personelUpd : {id}");
+            OracleDataReader rdr_3;
+            OracleCommand command_3 = new OracleCommand(" SELECT ILTSM.ID FROM FIR_ILTS ILTSM INNER JOIN FIR_PERSONEL PERSONEL " +
+                                                                          " ON ILTSM.ID = PERSONEL.FIRMA_ILETISIM_ID  " +
+                                                                          " WHERE ILTSM.FIRMA_BASVURU_ID = " + id, conn);
+            {
+                Logger.Info($"rdr_3 : {command_3.CommandText}");
+                rdr_3 = command_3.ExecuteReader();
+            }
+
+            string result = "";
+            while (rdr_3.Read())
+              result = rdr_3.GetString(0);
+
+                Logger.Info($"rdr_3 result: {result}");
+
+          
+                OracleCommand cmd = conn.CreateCommand();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = " UPDATE FIR_ILTS SET "+
+                                  " VERI_GIRISI_YAPILDI_MI = 1 "+
+                                  " WHERE ID = " + result;
+       
+                cmd.ExecuteNonQuery();
+            Logger.Info($"cmd : {cmd.CommandText}");
+            Logger.Info($"Success");
+        }
+
 
         private void button5_Click(object sender, EventArgs e)
         {
