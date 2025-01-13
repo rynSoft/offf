@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -19,8 +20,14 @@ using NLog;
 using Oracle.ManagedDataAccess.Client;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
+
+
+
+
 namespace WindowsFormsApp1
 {
+
+
     public partial class Form1 : Form
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -31,6 +38,17 @@ namespace WindowsFormsApp1
             "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=soradb-scan.tobb.org.tr)(PORT=1521))" +
             "(CONNECT_DATA=(SERVICE_NAME=TOBB)))";
 
+        // Durum adları ve sayısal karşılıkları
+        Dictionary<string, int> durumlar = new Dictionary<string, int>
+{
+    { "İlk Başvuru", 1 },
+    { "Değişiklik", 2 },
+    { "Yenileme", 3 },
+    { "İptal", 4 }
+};
+
+
+
         public Form1()
         {
             InitializeComponent();
@@ -39,7 +57,13 @@ namespace WindowsFormsApp1
         private void Form1_Load(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false;
-            // Optional: Add any initialization code here
+            foreach (var durum in durumlar)
+            {
+                comboBoxDurum.Items.Add(durum.Key); // "İlk Başvuru", "Değişiklik" vb.
+            }
+            maskedTextBox1.Mask = "00.00.0000";
+            maskedTextBox3.Mask = "00.00.0000";
+
         }
 
         #region Case 1 -  Eksper veya Raportor E-imzasını atarsaki durumu
@@ -479,18 +503,18 @@ namespace WindowsFormsApp1
 
             string result = "";
             while (rdr_3.Read())
-              result = rdr_3.GetString(0);
+                result = rdr_3.GetString(0);
 
-                Logger.Info($"rdr_3 result: {result}");
+            Logger.Info($"rdr_3 result: {result}");
 
-          
-                OracleCommand cmd = conn.CreateCommand();
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandText = " UPDATE FIR_ILTS SET "+
-                                  " VERI_GIRISI_YAPILDI_MI = 1 "+
-                                  " WHERE ID = " + result;
-       
-                cmd.ExecuteNonQuery();
+
+            OracleCommand cmd = conn.CreateCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = " UPDATE FIR_ILTS SET " +
+                              " VERI_GIRISI_YAPILDI_MI = 1 " +
+                              " WHERE ID = " + result;
+
+            cmd.ExecuteNonQuery();
             Logger.Info($"cmd : {cmd.CommandText}");
             Logger.Info($"Success");
         }
@@ -586,8 +610,8 @@ namespace WindowsFormsApp1
             string query = " SELECT  DUR.DURUM_ADI,ISL.ISLEM_TARIHI,ISL.ACIKLAMA,ISL.SON_GUNCELLEYEN_KULLANICI,ISL.ID " +
                            " FROM FIR_BAS_ISL ISL " +
                            "    LEFT JOIN A_BASV_DUR DUR ON ISL.BASVURU_DURUM_ID = DUR.ID " +
-                           " WHERE ISL.FIRMA_BASVURU_ID IN ( SELECT ID FROM FIR_BASV  WHERE BASVURU_NO = "+ txtnerede.Text + " ) " +
-                           " ORDER BY ISL.ID DESC " ;
+                           " WHERE ISL.FIRMA_BASVURU_ID IN ( SELECT ID FROM FIR_BASV  WHERE BASVURU_NO = " + txtnerede.Text + " ) " +
+                           " ORDER BY ISL.ID DESC ";
 
             Logger.Info($"button 7 query :  {query}");
             try
@@ -612,7 +636,7 @@ namespace WindowsFormsApp1
 
         private void button8_Click(object sender, EventArgs e)
         {
-            string query = " SELECT  DUR.DURUM_ADI,ISL.ISLEM_TARIHI,ISL.ACIKLAMA,ISL.SON_GUNCELLEYEN_KULLANICI,ISL.ID "+
+            string query = " SELECT  DUR.DURUM_ADI,ISL.ISLEM_TARIHI,ISL.ACIKLAMA,ISL.SON_GUNCELLEYEN_KULLANICI,ISL.ID " +
                            " FROM YMB_BSVR_ISLM ISL LEFT JOIN A_BASV_DUR DUR ON ISL.BASVURU_DURUM_ID = DUR.ID " +
                            " WHERE ISL.YMB_BASVURU_ID IN ( SELECT ID FROM  YMB_BASVR   WHERE YMB_BASVURU_NO = " + txtnerede.Text + "                                                                                                                                                                                                                                                                                                           " +
                            " ) ORDER BY ISL.ID DESC";
@@ -697,5 +721,385 @@ namespace WindowsFormsApp1
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+
+            if (!string.IsNullOrEmpty(txtBasvuruNo.Text) && comboBoxDurum.SelectedItem != null)
+            {
+                string basvuruNo = txtBasvuruNo.Text;
+                string seciliDurum = comboBoxDurum.SelectedItem.ToString();
+
+                // Durumlara ait sayısal ID değerleri
+                Dictionary<string, int> durumlar = new Dictionary<string, int>
+        {
+            { "İlk Başvuru", 1 },
+            { "Değişiklik", 2 },
+            { "Yenileme", 3 },
+            { "İptal", 4 }
+        };
+
+                if (!durumlar.ContainsKey(seciliDurum))
+                {
+                    MessageBox.Show("Geçersiz bir durum seçildi!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                int durumId = durumlar[seciliDurum];
+
+                using (OracleConnection connection = new OracleConnection(connectionString))
+                {
+                    try
+                    {
+                        connection.Open();
+
+                        // FIR_BASV ID'yi al
+                        string basvuruQuery = "SELECT ID FROM FIR_BASV WHERE BASVURU_NO = :basvuruNo";
+                        OracleCommand cmdBasvuru = new OracleCommand(basvuruQuery, connection);
+                        cmdBasvuru.Parameters.Add(new OracleParameter("basvuruNo", basvuruNo));
+
+                        object resultId = cmdBasvuru.ExecuteScalar();
+                        if (resultId == null)
+                        {
+                            MessageBox.Show("Başvuru bulunamadı!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        long firmaBasvuruId = Convert.ToInt64(resultId);
+
+                        // FIR_BAS_ISL için en yüksek ID'yi bul
+                        string maxIdQuery = @"
+                    SELECT MAX(ID) 
+                    FROM FIR_BAS_ISL 
+                    WHERE FIRMA_BASVURU_ID = :firmaBasvuruId";
+
+                        OracleCommand cmdMaxId = new OracleCommand(maxIdQuery, connection);
+                        cmdMaxId.Parameters.Add(new OracleParameter("firmaBasvuruId", firmaBasvuruId));
+
+                        object maxIdResult = cmdMaxId.ExecuteScalar();
+                        if (maxIdResult == null)
+                        {
+                            MessageBox.Show("FIR_BAS_ISL kaydı bulunamadı!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        long maxId = Convert.ToInt64(maxIdResult);
+
+                        // BASVURU_TURU_ID'yi güncelle
+                        string updateQuery = @"
+                    UPDATE FIR_BAS_ISL
+                    SET BASVURU_TURU_ID = :durumId
+                    WHERE ID = :maxId";
+
+                        OracleCommand cmdUpdate = new OracleCommand(updateQuery, connection);
+                        cmdUpdate.Parameters.Add(new OracleParameter("durumId", durumId));
+                        cmdUpdate.Parameters.Add(new OracleParameter("maxId", maxId));
+
+                        int rowsAffected = cmdUpdate.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Durum güncellendi!", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Durum güncellenemedi!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Hata: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Lütfen tüm alanları doldurun!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void label14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            string basvuruNo = textBox5.Text.Trim();
+            string tarih = maskedTextBox1.Text.Trim();  // Kullanıcıdan alınan tarih "03.10.2024" formatında gelecek
+
+            // Başvuru No kontrolü
+            if (string.IsNullOrEmpty(basvuruNo))
+            {
+                MessageBox.Show("Lütfen Başvuru No giriniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Beklenen tarih formatları
+            string[] formats = { "dd.MM.yyyy", "dd,MM,yyyy", "dd/MM/yyyy", "dd-MM-yyyy" };
+            CultureInfo culture = new CultureInfo("tr-TR");
+            DateTimeStyles style = DateTimeStyles.None;
+
+            // Tarih kontrolü
+            if (!DateTime.TryParseExact(tarih, formats, culture, style, out DateTime parsedDate))
+            {
+                MessageBox.Show($"Lütfen geçerli bir tarih giriniz! (Beklenen format: gg.aa.yyyy veya gg/aa/yyyy)", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Tarihi Oracle'ın kabul ettiği formata çeviriyoruz
+            string formattedDate = parsedDate.ToString("yyyy-MM-dd HH:mm:ss");
+
+            // Oracle bağlantısı ile güncelleme işlemi
+            using (OracleConnection connection = new OracleConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string sorgu = @"UPDATE KAPST_RAP 
+                            SET GECERLILIK_TARIHI = TO_DATE(:tarih, 'YYYY-MM-DD HH24:MI:SS')
+                            WHERE ID IN (
+                                SELECT KAPASITE_RAPORU_ID 
+                                FROM FIR_BASV 
+                                WHERE BASVURU_NO = :basvuruNo
+                            )";
+
+                    using (OracleCommand command = new OracleCommand(sorgu, connection))
+                    {
+                        command.Parameters.Add(new OracleParameter("tarih", formattedDate));  // Format: "2024-03-10 00:00:00"
+                        command.Parameters.Add(new OracleParameter("basvuruNo", basvuruNo));
+
+                        int rowsAffected = command.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Geçerlilik tarihi güncellendi!", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Başvuru bulunamadı!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Hata: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            string basvuruNo = textBox6.Text.Trim();  // Başvuru No
+            string belgeNo = textBox7.Text.Trim();  // Sanayi Sicil Belge No
+            string tarih = maskedTextBox3.Text.Trim();  // Geçerlilik Tarihi
+
+            // Başvuru No kontrolü
+            if (string.IsNullOrEmpty(basvuruNo))
+            {
+                MessageBox.Show("Lütfen Başvuru No giriniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Beklenen tarih formatları
+            string[] formats = { "dd.MM.yyyy", "dd,MM,yyyy", "dd/MM/yyyy", "dd-MM-yyyy" };
+            CultureInfo culture = new CultureInfo("tr-TR");
+            DateTimeStyles style = DateTimeStyles.None;
+            DateTime parsedDate;
+
+            bool isDateValid = DateTime.TryParseExact(tarih, formats, culture, style, out parsedDate);
+
+            // Başlangıçta güncelleme sorgusunu boş tutuyoruz
+            string updateQuery = "UPDATE YMB_BASVR SET ";
+            List<string> setClauses = new List<string>();
+            List<OracleParameter> parameters = new List<OracleParameter>();
+
+            // Hangi alanların dolu olduğuna göre sorguyu güncelle
+            if (isDateValid)
+            {
+                setClauses.Add("SANAYI_SICIL_BELGE_TARIHI = TO_DATE(:tarih, 'YYYY-MM-DD HH24:MI:SS')");
+                parameters.Add(new OracleParameter("tarih", parsedDate.ToString("yyyy-MM-dd HH:mm:ss")));
+            }
+
+            if (!string.IsNullOrEmpty(belgeNo))
+            {
+                setClauses.Add("SANAYI_SICIL_BELGE_NO = :belgeNo");
+                parameters.Add(new OracleParameter("belgeNo", belgeNo));
+            }
+
+            // Hiçbir güncellenebilir bilgi yoksa çık
+            if (setClauses.Count == 0)
+            {
+                MessageBox.Show("Güncellenecek bilgi girilmedi!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Sorgunun son halini oluştur
+            updateQuery += string.Join(", ", setClauses) + " WHERE YMB_BASVURU_NO = :basvuruNo";
+            parameters.Add(new OracleParameter("basvuruNo", basvuruNo));
+
+            // Oracle bağlantısı ile güncelleme işlemi
+            using (OracleConnection connection = new OracleConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    using (OracleCommand command = new OracleCommand(updateQuery, connection))
+                    {
+                        command.Parameters.AddRange(parameters.ToArray());
+
+                        int rowsAffected = command.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Güncelleme başarılı!", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Başvuru bulunamadı!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Hata: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void panel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void textBox8_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label19_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            string basvuruNo = textBox8.Text.Trim();  // Başvuru No alınır
+            if (string.IsNullOrEmpty(basvuruNo))
+            {
+                MessageBox.Show("Lütfen Başvuru No giriniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+         
+
+            try
+            {
+                using (OracleConnection connection = new OracleConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string sorgu = @"SELECT * FROM YMB_BASVR WHERE YMB_BASVURU_NO = :basvuruNo";
+
+                    using (OracleCommand command = new OracleCommand(sorgu, connection))
+                    {
+                        command.Parameters.Add(new OracleParameter("basvuruNo", basvuruNo));
+
+                        using (OracleDataAdapter adapter = new OracleDataAdapter(command))
+                        {
+                            DataTable dataTable = new DataTable();  // Verileri tutacak tablo
+                            adapter.Fill(dataTable);  // Sorgu sonucu tabloya doldurulur
+                            dataGridView1.DataSource = dataTable;  // DataGridView’e bağlanır
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Hata: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            string basvuruNo = textBox8.Text.Trim();  // Kullanıcıdan başvuru no alınır
+            if (string.IsNullOrEmpty(basvuruNo))
+            {
+                MessageBox.Show("Lütfen Başvuru No giriniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+         
+
+            try
+            {
+                using (OracleConnection connection = new OracleConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string sorgu = @"
+                SELECT *
+                FROM FIR_BASV
+                WHERE BASVURU_NO = :basvuruNo";
+
+                    using (OracleCommand command = new OracleCommand(sorgu, connection))
+                    {
+                        command.Parameters.Add(new OracleParameter("basvuruNo", basvuruNo));
+
+                        using (OracleDataAdapter adapter = new OracleDataAdapter(command))
+                        {
+                            DataTable dataTable = new DataTable();  // Sorgu sonuçlarını tutacak tablo
+                            adapter.Fill(dataTable);  // DataTable içine veriyi doldur
+                            dataGridView1.DataSource = dataTable;  // DataGridView kontrolüne tabloyu bağla
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Hata: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            string basvuruNo = textBox8.Text.Trim();  // Kullanıcıdan başvuru no alınır
+            if (string.IsNullOrEmpty(basvuruNo))
+            {
+                MessageBox.Show("Lütfen Başvuru No giriniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+           
+
+            try
+            {
+                using (OracleConnection connection = new OracleConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string sorgu = @"
+                select * 
+from kapst_rap 
+where id IN  (
+    select KAPASITE_RAPORU_ID 
+    from fir_basv 
+    where basvuru_no = :basvuruNo)";
+
+                    using (OracleCommand command = new OracleCommand(sorgu, connection))
+                    {
+                        command.Parameters.Add(new OracleParameter("basvuruNo", basvuruNo));
+
+                        using (OracleDataAdapter adapter = new OracleDataAdapter(command))
+                        {
+                            DataTable dataTable = new DataTable();  // Sorgu sonuçlarını tutacak tablo
+                            adapter.Fill(dataTable);  // DataTable içine veriyi doldur
+                            dataGridView1.DataSource = dataTable;  // DataGridView kontrolüne tabloyu bağla
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Hata: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
+
