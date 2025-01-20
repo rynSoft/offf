@@ -25,8 +25,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             System.Windows.Forms.Panel panel4;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.button18 = new System.Windows.Forms.Button();
+            this.button14 = new System.Windows.Forms.Button();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.button15 = new System.Windows.Forms.Button();
+            this.button16 = new System.Windows.Forms.Button();
+            this.textBox8 = new System.Windows.Forms.TextBox();
             this.dataGridResults = new System.Windows.Forms.DataGridView();
             this.btnExecute = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -59,6 +66,8 @@
             this.button7 = new System.Windows.Forms.Button();
             this.txtnerede = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.button6 = new System.Windows.Forms.Button();
             this.aktifYapma = new System.Windows.Forms.TextBox();
@@ -73,7 +82,32 @@
             this.button4 = new System.Windows.Forms.Button();
             this.personelTxt = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.button20 = new System.Windows.Forms.Button();
+            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.button19 = new System.Windows.Forms.Button();
+            this.textBox10 = new System.Windows.Forms.TextBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.button17 = new System.Windows.Forms.Button();
+            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.maskedTextBox3 = new System.Windows.Forms.MaskedTextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.button13 = new System.Windows.Forms.Button();
+            this.textBox6 = new System.Windows.Forms.TextBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.button12 = new System.Windows.Forms.Button();
@@ -84,23 +118,11 @@
             this.label12 = new System.Windows.Forms.Label();
             this.button11 = new System.Windows.Forms.Button();
             this.txtBasvuruNo = new System.Windows.Forms.TextBox();
-            this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.button13 = new System.Windows.Forms.Button();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.maskedTextBox3 = new System.Windows.Forms.MaskedTextBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.button15 = new System.Windows.Forms.Button();
-            this.button16 = new System.Windows.Forms.Button();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.button14 = new System.Windows.Forms.Button();
+            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.button21 = new System.Windows.Forms.Button();
+            this.button22 = new System.Windows.Forms.Button();
             panel4 = new System.Windows.Forms.Panel();
+            panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridResults)).BeginInit();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -113,12 +135,105 @@
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
-            this.groupBox7.SuspendLayout();
-            panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // panel4
+            // 
+            panel4.BackColor = System.Drawing.Color.RosyBrown;
+            panel4.Controls.Add(this.button18);
+            panel4.Controls.Add(this.button14);
+            panel4.Controls.Add(this.label20);
+            panel4.Controls.Add(this.label19);
+            panel4.Controls.Add(this.button15);
+            panel4.Controls.Add(this.button16);
+            panel4.Controls.Add(this.textBox8);
+            panel4.Location = new System.Drawing.Point(27, 160);
+            panel4.Margin = new System.Windows.Forms.Padding(2);
+            panel4.Name = "panel4";
+            panel4.Size = new System.Drawing.Size(535, 77);
+            panel4.TabIndex = 14;
+            panel4.Paint += new System.Windows.Forms.PaintEventHandler(this.panel4_Paint);
+            // 
+            // button18
+            // 
+            this.button18.Location = new System.Drawing.Point(442, 29);
+            this.button18.Margin = new System.Windows.Forms.Padding(2);
+            this.button18.Name = "button18";
+            this.button18.Size = new System.Drawing.Size(87, 36);
+            this.button18.TabIndex = 10;
+            this.button18.Text = "İmzaları Göster";
+            this.button18.UseVisualStyleBackColor = true;
+            this.button18.Click += new System.EventHandler(this.button18_Click_1);
+            // 
+            // button14
+            // 
+            this.button14.Location = new System.Drawing.Point(325, 29);
+            this.button14.Margin = new System.Windows.Forms.Padding(2);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(113, 36);
+            this.button14.TabIndex = 9;
+            this.button14.Text = "Kapasite Raporu Sorgula";
+            this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(151, 7);
+            this.label20.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(171, 13);
+            this.label20.TabIndex = 7;
+            this.label20.Text = "SKR - YMB BAŞVURU SORGULA";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(17, 17);
+            this.label19.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(63, 13);
+            this.label19.TabIndex = 8;
+            this.label19.Text = "Başvuru No";
+            this.label19.Click += new System.EventHandler(this.label19_Click);
+            // 
+            // button15
+            // 
+            this.button15.Location = new System.Drawing.Point(248, 29);
+            this.button15.Margin = new System.Windows.Forms.Padding(2);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(73, 36);
+            this.button15.TabIndex = 6;
+            this.button15.Text = "YMB Sorgula";
+            this.button15.UseVisualStyleBackColor = true;
+            this.button15.Click += new System.EventHandler(this.button15_Click);
+            // 
+            // button16
+            // 
+            this.button16.Location = new System.Drawing.Point(154, 29);
+            this.button16.Margin = new System.Windows.Forms.Padding(2);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(87, 36);
+            this.button16.TabIndex = 2;
+            this.button16.Text = "Skr Sorgula";
+            this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
+            // 
+            // textBox8
+            // 
+            this.textBox8.Location = new System.Drawing.Point(17, 38);
+            this.textBox8.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(133, 20);
+            this.textBox8.TabIndex = 1;
+            this.textBox8.TextChanged += new System.EventHandler(this.textBox8_TextChanged);
             // 
             // dataGridResults
             // 
@@ -456,6 +571,8 @@
             // groupBox3
             // 
             this.groupBox3.BackColor = System.Drawing.Color.OrangeRed;
+            this.groupBox3.Controls.Add(this.label21);
+            this.groupBox3.Controls.Add(this.comboBox1);
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.button6);
             this.groupBox3.Controls.Add(this.aktifYapma);
@@ -466,12 +583,33 @@
             this.groupBox3.Size = new System.Drawing.Size(268, 132);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Blokaj veya pasife düştüğünde Raporu Aktif Yapmak";
+            this.groupBox3.Text = "SKR Durumu Değiştirme";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(13, 61);
+            this.label21.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(76, 13);
+            this.label21.TabIndex = 6;
+            this.label21.Text = "Rapor Durumu";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Aktif",
+            "Pasif"});
+            this.comboBox1.Location = new System.Drawing.Point(90, 58);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(133, 21);
+            this.comboBox1.TabIndex = 5;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(4, 38);
+            this.label9.Location = new System.Drawing.Point(13, 37);
             this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(63, 13);
@@ -480,18 +618,18 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(90, 62);
+            this.button6.Location = new System.Drawing.Point(90, 87);
             this.button6.Margin = new System.Windows.Forms.Padding(2);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(134, 55);
+            this.button6.Size = new System.Drawing.Size(134, 30);
             this.button6.TabIndex = 2;
-            this.button6.Text = "Raporu Aktif Yap";
+            this.button6.Text = "Rapor Durumunu Değiştir";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // aktifYapma
             // 
-            this.aktifYapma.Location = new System.Drawing.Point(90, 38);
+            this.aktifYapma.Location = new System.Drawing.Point(90, 33);
             this.aktifYapma.Margin = new System.Windows.Forms.Padding(2);
             this.aktifYapma.Name = "aktifYapma";
             this.aktifYapma.Size = new System.Drawing.Size(133, 20);
@@ -608,6 +746,11 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.button22);
+            this.tabPage3.Controls.Add(this.button21);
+            this.tabPage3.Controls.Add(this.groupBox10);
+            this.tabPage3.Controls.Add(this.groupBox9);
+            this.tabPage3.Controls.Add(this.groupBox8);
             this.tabPage3.Controls.Add(panel4);
             this.tabPage3.Controls.Add(this.dataGridView1);
             this.tabPage3.Controls.Add(this.groupBox7);
@@ -621,6 +764,263 @@
             this.tabPage3.Text = "Veri Düzenle 2";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // groupBox10
+            // 
+            this.groupBox10.BackColor = System.Drawing.Color.Turquoise;
+            this.groupBox10.Controls.Add(this.textBox12);
+            this.groupBox10.Controls.Add(this.label25);
+            this.groupBox10.Controls.Add(this.label26);
+            this.groupBox10.Controls.Add(this.button20);
+            this.groupBox10.Controls.Add(this.textBox11);
+            this.groupBox10.Location = new System.Drawing.Point(287, 385);
+            this.groupBox10.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox10.Size = new System.Drawing.Size(249, 128);
+            this.groupBox10.TabIndex = 8;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "SKR Ücret Tanımlama";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(31, 55);
+            this.label25.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(33, 13);
+            this.label25.TabIndex = 5;
+            this.label25.Text = "Ücret";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(5, 23);
+            this.label26.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(63, 13);
+            this.label26.TabIndex = 4;
+            this.label26.Text = "Başvuru No";
+            // 
+            // button20
+            // 
+            this.button20.Location = new System.Drawing.Point(89, 82);
+            this.button20.Margin = new System.Windows.Forms.Padding(2);
+            this.button20.Name = "button20";
+            this.button20.Size = new System.Drawing.Size(134, 25);
+            this.button20.TabIndex = 2;
+            this.button20.Text = "Başvuru Ücreti Tanımla";
+            this.button20.UseVisualStyleBackColor = true;
+            this.button20.Click += new System.EventHandler(this.button20_Click);
+            // 
+            // textBox11
+            // 
+            this.textBox11.Location = new System.Drawing.Point(90, 21);
+            this.textBox11.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox11.Name = "textBox11";
+            this.textBox11.Size = new System.Drawing.Size(133, 20);
+            this.textBox11.TabIndex = 1;
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.BackColor = System.Drawing.Color.LimeGreen;
+            this.groupBox9.Controls.Add(this.comboBox2);
+            this.groupBox9.Controls.Add(this.label23);
+            this.groupBox9.Controls.Add(this.label24);
+            this.groupBox9.Controls.Add(this.button19);
+            this.groupBox9.Controls.Add(this.textBox10);
+            this.groupBox9.Location = new System.Drawing.Point(19, 385);
+            this.groupBox9.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox9.Size = new System.Drawing.Size(264, 128);
+            this.groupBox9.TabIndex = 7;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Başvuru Durum Düzenleme";
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(90, 47);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(159, 21);
+            this.comboBox2.TabIndex = 6;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(5, 52);
+            this.label23.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(86, 13);
+            this.label23.TabIndex = 5;
+            this.label23.Text = "Başvuru Durumu";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(5, 23);
+            this.label24.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(63, 13);
+            this.label24.TabIndex = 4;
+            this.label24.Text = "Başvuru No";
+            // 
+            // button19
+            // 
+            this.button19.Location = new System.Drawing.Point(89, 82);
+            this.button19.Margin = new System.Windows.Forms.Padding(2);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(134, 25);
+            this.button19.TabIndex = 2;
+            this.button19.Text = "Başvuru Durumu Değiştir";
+            this.button19.UseVisualStyleBackColor = true;
+            this.button19.Click += new System.EventHandler(this.button19_Click);
+            // 
+            // textBox10
+            // 
+            this.textBox10.Location = new System.Drawing.Point(90, 21);
+            this.textBox10.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox10.Name = "textBox10";
+            this.textBox10.Size = new System.Drawing.Size(159, 20);
+            this.textBox10.TabIndex = 1;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.BackColor = System.Drawing.Color.Crimson;
+            this.groupBox8.Controls.Add(this.label22);
+            this.groupBox8.Controls.Add(this.button17);
+            this.groupBox8.Controls.Add(this.textBox9);
+            this.groupBox8.Location = new System.Drawing.Point(566, 160);
+            this.groupBox8.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox8.Size = new System.Drawing.Size(241, 77);
+            this.groupBox8.TabIndex = 7;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "!! SKR Başvuru Silme !!";
+            this.groupBox8.Enter += new System.EventHandler(this.groupBox8_Enter);
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(17, 24);
+            this.label22.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(63, 13);
+            this.label22.TabIndex = 4;
+            this.label22.Text = "Başvuru No";
+            // 
+            // button17
+            // 
+            this.button17.Location = new System.Drawing.Point(89, 47);
+            this.button17.Margin = new System.Windows.Forms.Padding(2);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(134, 25);
+            this.button17.TabIndex = 2;
+            this.button17.Text = "Başvuruyu kökten sil";
+            this.button17.UseVisualStyleBackColor = true;
+            this.button17.Click += new System.EventHandler(this.button17_Click);
+            // 
+            // textBox9
+            // 
+            this.textBox9.Location = new System.Drawing.Point(90, 21);
+            this.textBox9.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox9.Name = "textBox9";
+            this.textBox9.Size = new System.Drawing.Size(134, 20);
+            this.textBox9.TabIndex = 1;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(6, 242);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 72;
+            this.dataGridView1.Size = new System.Drawing.Size(813, 138);
+            this.dataGridView1.TabIndex = 13;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.BackColor = System.Drawing.Color.LightCoral;
+            this.groupBox7.Controls.Add(this.textBox7);
+            this.groupBox7.Controls.Add(this.maskedTextBox3);
+            this.groupBox7.Controls.Add(this.label18);
+            this.groupBox7.Controls.Add(this.label16);
+            this.groupBox7.Controls.Add(this.label17);
+            this.groupBox7.Controls.Add(this.button13);
+            this.groupBox7.Controls.Add(this.textBox6);
+            this.groupBox7.Location = new System.Drawing.Point(531, 18);
+            this.groupBox7.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox7.Size = new System.Drawing.Size(249, 128);
+            this.groupBox7.TabIndex = 8;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "YMB SSB NO VE TARİH GÜNCELLE";
+            // 
+            // textBox7
+            // 
+            this.textBox7.Location = new System.Drawing.Point(91, 47);
+            this.textBox7.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(133, 20);
+            this.textBox7.TabIndex = 10;
+            // 
+            // maskedTextBox3
+            // 
+            this.maskedTextBox3.Location = new System.Drawing.Point(89, 70);
+            this.maskedTextBox3.Name = "maskedTextBox3";
+            this.maskedTextBox3.Size = new System.Drawing.Size(135, 20);
+            this.maskedTextBox3.TabIndex = 9;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(5, 73);
+            this.label18.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(79, 13);
+            this.label18.TabIndex = 8;
+            this.label18.Text = "Geçerlilik Tarihi";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(32, 52);
+            this.label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(51, 13);
+            this.label16.TabIndex = 5;
+            this.label16.Text = "Belge No";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(20, 26);
+            this.label17.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(63, 13);
+            this.label17.TabIndex = 4;
+            this.label17.Text = "Başvuru No";
+            // 
+            // button13
+            // 
+            this.button13.Location = new System.Drawing.Point(89, 91);
+            this.button13.Margin = new System.Windows.Forms.Padding(2);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(134, 24);
+            this.button13.TabIndex = 2;
+            this.button13.Text = "Güncelle";
+            this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(91, 23);
+            this.textBox6.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(133, 20);
+            this.textBox6.TabIndex = 1;
+            // 
             // groupBox6
             // 
             this.groupBox6.BackColor = System.Drawing.Color.DarkOrange;
@@ -633,10 +1033,17 @@
             this.groupBox6.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox6.Size = new System.Drawing.Size(249, 138);
+            this.groupBox6.Size = new System.Drawing.Size(249, 128);
             this.groupBox6.TabIndex = 7;
             this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Geçerlilik Tarihi Güncelleme";
+            this.groupBox6.Text = "SKR Geçerlilik Tarihi Güncelleme";
+            // 
+            // maskedTextBox1
+            // 
+            this.maskedTextBox1.Location = new System.Drawing.Point(90, 47);
+            this.maskedTextBox1.Name = "maskedTextBox1";
+            this.maskedTextBox1.Size = new System.Drawing.Size(134, 20);
+            this.maskedTextBox1.TabIndex = 7;
             // 
             // label14
             // 
@@ -690,7 +1097,7 @@
             this.groupBox5.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox5.Size = new System.Drawing.Size(249, 138);
+            this.groupBox5.Size = new System.Drawing.Size(249, 128);
             this.groupBox5.TabIndex = 2;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Başvuru Türü Düzenleme";
@@ -706,17 +1113,18 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(5, 52);
+            this.label13.Location = new System.Drawing.Point(19, 52);
             this.label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(38, 13);
+            this.label13.Size = new System.Drawing.Size(71, 13);
             this.label13.TabIndex = 5;
-            this.label13.Text = "Durum";
+            this.label13.Text = "Başvuru Türü";
+            this.label13.Click += new System.EventHandler(this.label13_Click);
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(5, 23);
+            this.label12.Location = new System.Drawing.Point(19, 23);
             this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(63, 13);
@@ -742,183 +1150,35 @@
             this.txtBasvuruNo.Size = new System.Drawing.Size(133, 20);
             this.txtBasvuruNo.TabIndex = 1;
             // 
-            // maskedTextBox1
+            // textBox12
             // 
-            this.maskedTextBox1.Location = new System.Drawing.Point(90, 47);
-            this.maskedTextBox1.Name = "maskedTextBox1";
-            this.maskedTextBox1.Size = new System.Drawing.Size(134, 20);
-            this.maskedTextBox1.TabIndex = 7;
+            this.textBox12.Location = new System.Drawing.Point(90, 49);
+            this.textBox12.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox12.Name = "textBox12";
+            this.textBox12.Size = new System.Drawing.Size(133, 20);
+            this.textBox12.TabIndex = 6;
             // 
-            // groupBox7
+            // button21
             // 
-            this.groupBox7.BackColor = System.Drawing.Color.LightCoral;
-            this.groupBox7.Controls.Add(this.textBox7);
-            this.groupBox7.Controls.Add(this.maskedTextBox3);
-            this.groupBox7.Controls.Add(this.label18);
-            this.groupBox7.Controls.Add(this.label16);
-            this.groupBox7.Controls.Add(this.label17);
-            this.groupBox7.Controls.Add(this.button13);
-            this.groupBox7.Controls.Add(this.textBox6);
-            this.groupBox7.Location = new System.Drawing.Point(531, 18);
-            this.groupBox7.Margin = new System.Windows.Forms.Padding(2);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox7.Size = new System.Drawing.Size(249, 138);
-            this.groupBox7.TabIndex = 8;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "SSB NO VE TARİH GÜNCELLE";
+            this.button21.Location = new System.Drawing.Point(566, 396);
+            this.button21.Margin = new System.Windows.Forms.Padding(2);
+            this.button21.Name = "button21";
+            this.button21.Size = new System.Drawing.Size(214, 54);
+            this.button21.TabIndex = 7;
+            this.button21.Text = "Canınız Sıkılırsa Bu Butona Basın";
+            this.button21.UseVisualStyleBackColor = true;
+            this.button21.Click += new System.EventHandler(this.button21_Click);
             // 
-            // label16
+            // button22
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(32, 52);
-            this.label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(51, 13);
-            this.label16.TabIndex = 5;
-            this.label16.Text = "Belge No";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(20, 26);
-            this.label17.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(63, 13);
-            this.label17.TabIndex = 4;
-            this.label17.Text = "Başvuru No";
-            // 
-            // button13
-            // 
-            this.button13.Location = new System.Drawing.Point(89, 95);
-            this.button13.Margin = new System.Windows.Forms.Padding(2);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(134, 24);
-            this.button13.TabIndex = 2;
-            this.button13.Text = "Güncelle";
-            this.button13.UseVisualStyleBackColor = true;
-            this.button13.Click += new System.EventHandler(this.button13_Click);
-            // 
-            // textBox6
-            // 
-            this.textBox6.Location = new System.Drawing.Point(91, 23);
-            this.textBox6.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(133, 20);
-            this.textBox6.TabIndex = 1;
-            // 
-            // maskedTextBox3
-            // 
-            this.maskedTextBox3.Location = new System.Drawing.Point(89, 70);
-            this.maskedTextBox3.Name = "maskedTextBox3";
-            this.maskedTextBox3.Size = new System.Drawing.Size(135, 20);
-            this.maskedTextBox3.TabIndex = 9;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(5, 73);
-            this.label18.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(79, 13);
-            this.label18.TabIndex = 8;
-            this.label18.Text = "Geçerlilik Tarihi";
-            // 
-            // textBox7
-            // 
-            this.textBox7.Location = new System.Drawing.Point(91, 47);
-            this.textBox7.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(133, 20);
-            this.textBox7.TabIndex = 10;
-            // 
-            // panel4
-            // 
-            panel4.BackColor = System.Drawing.Color.RosyBrown;
-            panel4.Controls.Add(this.button14);
-            panel4.Controls.Add(this.label20);
-            panel4.Controls.Add(this.label19);
-            panel4.Controls.Add(this.button15);
-            panel4.Controls.Add(this.button16);
-            panel4.Controls.Add(this.textBox8);
-            panel4.Location = new System.Drawing.Point(24, 160);
-            panel4.Margin = new System.Windows.Forms.Padding(2);
-            panel4.Name = "panel4";
-            panel4.Size = new System.Drawing.Size(478, 77);
-            panel4.TabIndex = 14;
-            panel4.Paint += new System.Windows.Forms.PaintEventHandler(this.panel4_Paint);
-            // 
-            // button15
-            // 
-            this.button15.Location = new System.Drawing.Point(248, 29);
-            this.button15.Margin = new System.Windows.Forms.Padding(2);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(73, 36);
-            this.button15.TabIndex = 6;
-            this.button15.Text = "YMB Sorgula";
-            this.button15.UseVisualStyleBackColor = true;
-            this.button15.Click += new System.EventHandler(this.button15_Click);
-            // 
-            // button16
-            // 
-            this.button16.Location = new System.Drawing.Point(154, 29);
-            this.button16.Margin = new System.Windows.Forms.Padding(2);
-            this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(87, 36);
-            this.button16.TabIndex = 2;
-            this.button16.Text = "Skr Sorgula";
-            this.button16.UseVisualStyleBackColor = true;
-            this.button16.Click += new System.EventHandler(this.button16_Click);
-            // 
-            // textBox8
-            // 
-            this.textBox8.Location = new System.Drawing.Point(17, 38);
-            this.textBox8.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(133, 20);
-            this.textBox8.TabIndex = 1;
-            this.textBox8.TextChanged += new System.EventHandler(this.textBox8_TextChanged);
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(23, 242);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 72;
-            this.dataGridView1.Size = new System.Drawing.Size(813, 91);
-            this.dataGridView1.TabIndex = 13;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(17, 17);
-            this.label19.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(63, 13);
-            this.label19.TabIndex = 8;
-            this.label19.Text = "Başvuru No";
-            this.label19.Click += new System.EventHandler(this.label19_Click);
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(151, 7);
-            this.label20.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(171, 13);
-            this.label20.TabIndex = 7;
-            this.label20.Text = "SKR - YMB BAŞVURU SORGULA";
-            // 
-            // button14
-            // 
-            this.button14.Location = new System.Drawing.Point(325, 29);
-            this.button14.Margin = new System.Windows.Forms.Padding(2);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(113, 36);
-            this.button14.TabIndex = 9;
-            this.button14.Text = "Kapasite Raporu Sorgula";
-            this.button14.UseVisualStyleBackColor = true;
-            this.button14.Click += new System.EventHandler(this.button14_Click);
+            this.button22.Location = new System.Drawing.Point(566, 459);
+            this.button22.Margin = new System.Windows.Forms.Padding(2);
+            this.button22.Name = "button22";
+            this.button22.Size = new System.Drawing.Size(214, 54);
+            this.button22.TabIndex = 15;
+            this.button22.Text = "Bu Butona Sakın Basmayın";
+            this.button22.UseVisualStyleBackColor = true;
+            this.button22.Click += new System.EventHandler(this.button22_Click);
             // 
             // Form1
             // 
@@ -934,6 +1194,8 @@
             this.Name = "Form1";
             this.Text = "Oracle Database Query";
             this.Load += new System.EventHandler(this.Form1_Load);
+            panel4.ResumeLayout(false);
+            panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridResults)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -954,15 +1216,19 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabPage3.ResumeLayout(false);
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox10.PerformLayout();
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
-            panel4.ResumeLayout(false);
-            panel4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1043,5 +1309,26 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Button button14;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Button button17;
+        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.Button button18;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Button button19;
+        private System.Windows.Forms.TextBox textBox10;
+        private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Button button20;
+        private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.Button button22;
+        private System.Windows.Forms.Button button21;
     }
 }
