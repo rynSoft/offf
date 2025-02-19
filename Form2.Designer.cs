@@ -186,6 +186,7 @@
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.SuspendLayout();
+            this.Controls.Add(this.tabControl1);
             // 
             // textBox4
             // 
@@ -197,11 +198,11 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Location = new System.Drawing.Point(17, 35);
+            this.tabControl1.Location = new System.Drawing.Point(7, 1);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(886, 573);
+            this.tabControl1.Size = new System.Drawing.Size(1564, 845);
             this.tabControl1.TabIndex = 27;
             // 
             // tabPage1
@@ -228,6 +229,8 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "TETİK";
             this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabPage1.BringToFront();
+            
             // 
             // button2
             // 
@@ -1601,6 +1604,7 @@
             this.button30.Name = "button30";
             this.button30.Size = new System.Drawing.Size(100, 20);
             this.button30.TabIndex = 0;
+            this.button30.BringToFront();
             // 
             // textBox22
             // 
@@ -1611,7 +1615,7 @@
             // 
             // button31
             // 
-            this.button31.Location = new System.Drawing.Point(477, 20);
+            this.button31.Location = new System.Drawing.Point(372, 171);
             this.button31.Name = "button31";
             this.button31.Size = new System.Drawing.Size(75, 23);
             this.button31.TabIndex = 0;
@@ -1624,11 +1628,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(919, 857);
-            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button31);
             this.Name = "Form2";
             this.Text = "Oracle Database Query";
-            this.Load += new System.EventHandler(this.Form2_Load);
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
