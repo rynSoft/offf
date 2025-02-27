@@ -118,11 +118,15 @@
             this.button28 = new System.Windows.Forms.Button();
             this.textBox20 = new System.Windows.Forms.TextBox();
             this.groupBox17 = new System.Windows.Forms.GroupBox();
-            this.label33 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
             this.button29 = new System.Windows.Forms.Button();
             this.textBox21 = new System.Windows.Forms.TextBox();
+            this.label33 = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox18 = new System.Windows.Forms.GroupBox();
+            this.label37 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dataGridView6 = new System.Windows.Forms.DataGridView();
             this.dataGridView5 = new System.Windows.Forms.DataGridView();
@@ -158,6 +162,14 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.groupBox19 = new System.Windows.Forms.GroupBox();
+            this.label39 = new System.Windows.Forms.Label();
+            this.comboBoxKolonlar = new System.Windows.Forms.ComboBox();
+            this.label40 = new System.Windows.Forms.Label();
+            this.button30 = new System.Windows.Forms.Button();
+            this.textBox22 = new System.Windows.Forms.TextBox();
+            this.label41 = new System.Windows.Forms.Label();
+            this.textBox23 = new System.Windows.Forms.TextBox();
             this.groupBox15.SuspendLayout();
             this.groupBox14.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -172,7 +184,9 @@
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox17.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.groupBox18.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
@@ -185,6 +199,7 @@
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.tabControl1.SuspendLayout();
+            this.groupBox19.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBox4
@@ -621,6 +636,7 @@
             this.button6.TabIndex = 2;
             this.button6.Text = "Rapor Durumunu Değiştir";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // aktifYapma
             // 
@@ -1118,6 +1134,7 @@
             this.button11.TabIndex = 7;
             this.button11.Text = "Güncelle";
             this.button11.UseVisualStyleBackColor = false;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
             // txtBasvuruNo
             // 
@@ -1136,9 +1153,9 @@
             // 
             // textBox19
             // 
-            this.textBox19.Location = new System.Drawing.Point(0, 0);
+            this.textBox19.Location = new System.Drawing.Point(91, 48);
             this.textBox19.Name = "textBox19";
-            this.textBox19.Size = new System.Drawing.Size(100, 20);
+            this.textBox19.Size = new System.Drawing.Size(134, 20);
             this.textBox19.TabIndex = 0;
             // 
             // label31
@@ -1157,25 +1174,61 @@
             // 
             // button28
             // 
-            this.button28.Location = new System.Drawing.Point(0, 0);
+            this.button28.BackColor = System.Drawing.Color.Transparent;
+            this.button28.Location = new System.Drawing.Point(90, 74);
             this.button28.Name = "button28";
-            this.button28.Size = new System.Drawing.Size(75, 23);
+            this.button28.Size = new System.Drawing.Size(135, 23);
             this.button28.TabIndex = 0;
+            this.button28.Text = "Güncelle";
+            this.button28.UseVisualStyleBackColor = false;
+            this.button28.Click += new System.EventHandler(this.button28_Click);
             // 
             // textBox20
             // 
-            this.textBox20.Location = new System.Drawing.Point(0, 0);
+            this.textBox20.Location = new System.Drawing.Point(91, 22);
             this.textBox20.Name = "textBox20";
-            this.textBox20.Size = new System.Drawing.Size(100, 20);
+            this.textBox20.Size = new System.Drawing.Size(131, 20);
             this.textBox20.TabIndex = 0;
             // 
             // groupBox17
             // 
-            this.groupBox17.Location = new System.Drawing.Point(0, 0);
+            this.groupBox17.BackColor = System.Drawing.Color.IndianRed;
+            this.groupBox17.Controls.Add(this.label36);
+            this.groupBox17.Controls.Add(this.button29);
+            this.groupBox17.Controls.Add(this.textBox21);
+            this.groupBox17.Location = new System.Drawing.Point(309, 572);
             this.groupBox17.Name = "groupBox17";
-            this.groupBox17.Size = new System.Drawing.Size(200, 100);
+            this.groupBox17.Size = new System.Drawing.Size(249, 82);
             this.groupBox17.TabIndex = 0;
             this.groupBox17.TabStop = false;
+            this.groupBox17.Text = "Eksper Ekleme";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(21, 26);
+            this.label36.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(43, 13);
+            this.label36.TabIndex = 12;
+            this.label36.Text = "User ID";
+            // 
+            // button29
+            // 
+            this.button29.BackColor = System.Drawing.Color.Transparent;
+            this.button29.Location = new System.Drawing.Point(69, 49);
+            this.button29.Name = "button29";
+            this.button29.Size = new System.Drawing.Size(154, 23);
+            this.button29.TabIndex = 0;
+            this.button29.Text = "Güncelle";
+            this.button29.UseVisualStyleBackColor = false;
+            // 
+            // textBox21
+            // 
+            this.textBox21.Location = new System.Drawing.Point(69, 23);
+            this.textBox21.Name = "textBox21";
+            this.textBox21.Size = new System.Drawing.Size(154, 20);
+            this.textBox21.TabIndex = 0;
             // 
             // label33
             // 
@@ -1183,20 +1236,6 @@
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(100, 23);
             this.label33.TabIndex = 0;
-            // 
-            // button29
-            // 
-            this.button29.Location = new System.Drawing.Point(0, 0);
-            this.button29.Name = "button29";
-            this.button29.Size = new System.Drawing.Size(75, 23);
-            this.button29.TabIndex = 0;
-            // 
-            // textBox21
-            // 
-            this.textBox21.Location = new System.Drawing.Point(0, 0);
-            this.textBox21.Name = "textBox21";
-            this.textBox21.Size = new System.Drawing.Size(100, 20);
-            this.textBox21.TabIndex = 0;
             // 
             // label34
             // 
@@ -1207,6 +1246,9 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.groupBox19);
+            this.tabPage3.Controls.Add(this.groupBox18);
+            this.tabPage3.Controls.Add(this.groupBox17);
             this.tabPage3.Controls.Add(this.groupBox15);
             this.tabPage3.Controls.Add(this.groupBox14);
             this.tabPage3.Controls.Add(this.groupBox4);
@@ -1228,6 +1270,43 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Veri Düzenle ";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // groupBox18
+            // 
+            this.groupBox18.BackColor = System.Drawing.Color.SeaGreen;
+            this.groupBox18.Controls.Add(this.label37);
+            this.groupBox18.Controls.Add(this.textBox19);
+            this.groupBox18.Controls.Add(this.label38);
+            this.groupBox18.Controls.Add(this.button28);
+            this.groupBox18.Controls.Add(this.textBox20);
+            this.groupBox18.Location = new System.Drawing.Point(597, 621);
+            this.groupBox18.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBox18.Name = "groupBox18";
+            this.groupBox18.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox18.Size = new System.Drawing.Size(249, 116);
+            this.groupBox18.TabIndex = 11;
+            this.groupBox18.TabStop = false;
+            this.groupBox18.Text = "Ünvan Güncelle";
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(27, 53);
+            this.label37.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(39, 13);
+            this.label37.TabIndex = 5;
+            this.label37.Text = "Ünvan";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(23, 25);
+            this.label38.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(63, 13);
+            this.label38.TabIndex = 4;
+            this.label38.Text = "Başvuru No";
             // 
             // tabPage2
             // 
@@ -1622,6 +1701,95 @@
             this.tabControl1.Size = new System.Drawing.Size(886, 822);
             this.tabControl1.TabIndex = 27;
             // 
+            // groupBox19
+            // 
+            this.groupBox19.BackColor = System.Drawing.Color.Aqua;
+            this.groupBox19.Controls.Add(this.label41);
+            this.groupBox19.Controls.Add(this.textBox23);
+            this.groupBox19.Controls.Add(this.label39);
+            this.groupBox19.Controls.Add(this.comboBoxKolonlar);
+            this.groupBox19.Controls.Add(this.label40);
+            this.groupBox19.Controls.Add(this.button30);
+            this.groupBox19.Controls.Add(this.textBox22);
+            this.groupBox19.Location = new System.Drawing.Point(25, 655);
+            this.groupBox19.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBox19.Name = "groupBox19";
+            this.groupBox19.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox19.Size = new System.Drawing.Size(249, 128);
+            this.groupBox19.TabIndex = 18;
+            this.groupBox19.TabStop = false;
+            this.groupBox19.Text = "Başvuru Detay Güncelleme";
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(19, 47);
+            this.label39.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(52, 13);
+            this.label39.TabIndex = 8;
+            this.label39.Text = "Kolon Adı";
+            // 
+            // comboBoxKolonlar
+            // 
+            this.comboBoxKolonlar.AutoCompleteCustomSource.AddRange(new string[] {
+            "SKR",
+            "YMB"});
+            this.comboBoxKolonlar.FormattingEnabled = true;
+            this.comboBoxKolonlar.Location = new System.Drawing.Point(91, 43);
+            this.comboBoxKolonlar.Name = "comboBoxKolonlar";
+            this.comboBoxKolonlar.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxKolonlar.TabIndex = 7;
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(14, 21);
+            this.label40.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(63, 13);
+            this.label40.TabIndex = 4;
+            this.label40.Text = "Başvuru No";
+            // 
+            // button30
+            // 
+            this.button30.Location = new System.Drawing.Point(91, 95);
+            this.button30.Margin = new System.Windows.Forms.Padding(2);
+            this.button30.Name = "button30";
+            this.button30.Size = new System.Drawing.Size(137, 29);
+            this.button30.TabIndex = 2;
+            this.button30.Text = "Güncelle";
+            this.button30.UseVisualStyleBackColor = true;
+            this.button30.Click += new System.EventHandler(this.button30_Click);
+            // 
+            // textBox22
+            // 
+            this.textBox22.Location = new System.Drawing.Point(91, 17);
+            this.textBox22.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox22.Multiline = true;
+            this.textBox22.Name = "textBox22";
+            this.textBox22.Size = new System.Drawing.Size(137, 20);
+            this.textBox22.TabIndex = 1;
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(31, 75);
+            this.label41.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(36, 13);
+            this.label41.TabIndex = 10;
+            this.label41.Text = "Değer";
+            // 
+            // textBox23
+            // 
+            this.textBox23.Location = new System.Drawing.Point(91, 72);
+            this.textBox23.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox23.Multiline = true;
+            this.textBox23.Name = "textBox23";
+            this.textBox23.Size = new System.Drawing.Size(137, 20);
+            this.textBox23.TabIndex = 9;
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1660,7 +1828,11 @@
             this.groupBox6.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox17.ResumeLayout(false);
+            this.groupBox17.PerformLayout();
             this.tabPage3.ResumeLayout(false);
+            this.groupBox18.ResumeLayout(false);
+            this.groupBox18.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
@@ -1676,6 +1848,8 @@
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             this.tabControl1.ResumeLayout(false);
+            this.groupBox19.ResumeLayout(false);
+            this.groupBox19.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1814,5 +1988,17 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.GroupBox groupBox18;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.GroupBox groupBox19;
+        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.ComboBox comboBoxKolonlar;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.Button button30;
+        private System.Windows.Forms.TextBox textBox22;
+        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.TextBox textBox23;
     }
 }

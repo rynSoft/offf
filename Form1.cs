@@ -138,6 +138,12 @@ namespace WindowsFormsApp1
             comboBox1.SelectedIndex = 0; // İlk öğeyi seçer
             maskedTextBox1.Mask = "00.00.0000";
             maskedTextBox3.Mask = "00.00.0000";
+            comboBoxKolonlar.Items.Add("TICARET_SICIL_NO");
+            comboBoxKolonlar.Items.Add("ODA_SICIL_NO");
+            comboBoxKolonlar.Items.Add("VERGI_NO");
+            comboBoxKolonlar.Items.Add("MERSIS_NO");
+            comboBoxKolonlar.Items.Add("SANAYI_SICIL_NO");
+            comboBoxKolonlar.Items.Add("TESCILLI_SERMAYE");
 
         }
 
@@ -1284,7 +1290,7 @@ namespace WindowsFormsApp1
                 MessageBox.Show("Lütfen bir arama değeri giriniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
+            //95.93
             string sorgu = "";
 
             switch (aramaKriteri)
@@ -3242,9 +3248,9 @@ where id IN  (
             string basvuruNo = textBox16.Text.Trim();
             string naceKodu = textBox15.Text.Trim();
 
-            if (string.IsNullOrEmpty(basvuruNo) || string.IsNullOrEmpty(naceKodu))
+            if (string.IsNullOrEmpty(basvuruNo))
             {
-                MessageBox.Show("Lütfen Başvuru No ve Nace Kodu girin.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lütfen Başvuru No girin.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -3268,6 +3274,39 @@ where id IN  (
 
                     long basvuruId = Convert.ToInt64(basvuruIdObj);
 
+                    if (string.IsNullOrEmpty(naceKodu))
+                    {
+                        string getDuplicateRecordsQuery = @"
+                SELECT ID FROM FAALIYET_KOD 
+                WHERE FIRMA_BASVURU_ID = :basvuruId
+                GROUP BY KODU, ACIKLAMA, FAALIYET_KODU_ID, FIRMA_BASVURU_ID 
+                HAVING COUNT(*) > 1";
+
+                        OracleCommand getDuplicateCmd = new OracleCommand(getDuplicateRecordsQuery, connection);
+                        getDuplicateCmd.Parameters.Add(new OracleParameter("basvuruId", basvuruId));
+
+                        List<long> duplicateIds = new List<long>();
+                        using (OracleDataReader reader = getDuplicateCmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                duplicateIds.Add(reader.GetInt64(0));
+                            }
+                        }
+
+                        if (duplicateIds.Count > 0)
+                        {
+                          
+                            string deleteQuery = "DELETE FROM FAALIYET_KOD WHERE ID = :id";
+                            OracleCommand deleteCmd = new OracleCommand(deleteQuery, connection);
+                            deleteCmd.Parameters.Add(new OracleParameter("id", duplicateIds[0])); // İlk kaydı siliyoruz
+                            deleteCmd.ExecuteNonQuery();
+
+                            MessageBox.Show("Aynı FAALIYET_KOD kaydından biri silindi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
+                    }
+                    else { 
                     // 2. A_FAALIYET_KODU tablosundan NACE koduna göre ID ve Adı al
                     string getFaaliyetKoduQuery = "SELECT ID, ADI FROM A_FAALIYET_KODU WHERE KODU = :naceKodu";
                     OracleCommand getFaaliyetKoduCmd = new OracleCommand(getFaaliyetKoduQuery, connection);
@@ -3287,77 +3326,128 @@ where id IN  (
 
                     if (faaliyetKoduId == 0 || string.IsNullOrEmpty(faaliyetAdi))
                     {
-                        MessageBox.Show("İstenen NACE kodu A_FAALIYET_KODU tablosunda kayıtlı değil.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
+                        MessageBox.Show("İstenen NACE kodu A_FAALIYET_KODU tablosunda kayıtlı değil. Yeni kayıt ekleyin.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // 3. FAALIYET_KOD tablosundan FIRMA_BASVURU_ID'ye göre verileri al
-                    string getFaaliyetQuery = "SELECT ID FROM FAALIYET_KOD WHERE FIRMA_BASVURU_ID = :basvuruId";
-                    OracleCommand getFaaliyetCmd = new OracleCommand(getFaaliyetQuery, connection);
-                    getFaaliyetCmd.Parameters.Add(new OracleParameter("basvuruId", basvuruId));
-
-                    object faaliyetIdObj = getFaaliyetCmd.ExecuteScalar();
-                    if (faaliyetIdObj == null)
-                    {
-                        MessageBox.Show("FAALIYET_KOD tablosunda bu başvuru için kayıt bulunamadı. Yeni kayıt oluşturuluyor.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        string getMaxIdQuery = "SELECT NVL(MAX(ID), 0) + 1 FROM FAALIYET_KOD";
-                        OracleCommand getMaxIdCmd = new OracleCommand(getMaxIdQuery, connection);
-                        object newIdObj = getMaxIdCmd.ExecuteScalar();
-
-                        if (newIdObj == null)
+                        // Yeni formu aç
+                        FormNaceEkle formNace = new FormNaceEkle(naceKodu);
+                        if (formNace.ShowDialog() == DialogResult.OK)
                         {
-                            MessageBox.Show("Yeni ID alınamadı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
-                        }
+                            // Kullanıcının girdiği verileri al
+                            string yeniAciklama = formNace.Aciklama;
+                            if (string.IsNullOrEmpty(yeniAciklama))
+                            {
+                                MessageBox.Show("Açıklama boş bırakılamaz!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
 
-                        long newId = Convert.ToInt64(newIdObj); // Yeni ID'yi al
+                            // Yeni ID'yi al
+                            string getMaxIdQuery = "SELECT NVL(MAX(ID), 0) + 1 FROM A_FAALIYET_KODU";
+                            OracleCommand getMaxIdCmd = new OracleCommand(getMaxIdQuery, connection);
+                            object newIdObj = getMaxIdCmd.ExecuteScalar();
+                            if (newIdObj == null)
+                            {
+                                MessageBox.Show("Yeni ID alınamadı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
 
-                        // Yeni faaliyet kodunu ekle
-                        string insertQuery = @"
-INSERT INTO FAALIYET_KOD (ID, FIRMA_BASVURU_ID, KODU, ACIKLAMA, FAALIYET_KODU_ID)
-VALUES (:id, :basvuruId, :kodu, :aciklama, :faaliyetKoduId)";
+                            long newId = Convert.ToInt64(newIdObj);
 
-                        OracleCommand insertCmd = new OracleCommand(insertQuery, connection);
-                        insertCmd.Parameters.Add(new OracleParameter("id", newId));  // Yeni ID set ediliyor
-                        insertCmd.Parameters.Add(new OracleParameter("basvuruId", basvuruId));
-                        insertCmd.Parameters.Add(new OracleParameter("kodu", naceKodu));
-                        insertCmd.Parameters.Add(new OracleParameter("aciklama", faaliyetAdi));
-                        insertCmd.Parameters.Add(new OracleParameter("faaliyetKoduId", faaliyetKoduId));
+                            // Yeni NACE kodunu ekle
+                            string insertFaaliyetKoduQuery = @"
+        INSERT INTO A_FAALIYET_KODU (ID, KODU, ADI)
+        VALUES (:id, :kodu, :adi)";
 
-                        int rowsInserted = insertCmd.ExecuteNonQuery();
-                        if (rowsInserted > 0)
-                        {
-                            MessageBox.Show("Yeni faaliyet kodu başarıyla eklendi.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            OracleCommand insertFaaliyetCmd = new OracleCommand(insertFaaliyetKoduQuery, connection);
+                            insertFaaliyetCmd.Parameters.Add(new OracleParameter("id", newId));
+                            insertFaaliyetCmd.Parameters.Add(new OracleParameter("kodu", naceKodu));
+                            insertFaaliyetCmd.Parameters.Add(new OracleParameter("adi", yeniAciklama));
+
+                            int rowsInserted = insertFaaliyetCmd.ExecuteNonQuery();
+                            if (rowsInserted > 0)
+                            {
+                                MessageBox.Show("Yeni NACE kodu başarıyla eklendi.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                faaliyetKoduId = newId;
+                                faaliyetAdi = yeniAciklama;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Yeni NACE kodu eklenirken hata oluştu.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
                         }
                         else
                         {
-                            MessageBox.Show("Yeni faaliyet kodu eklenirken hata oluştu.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
                         }
-                        return;
                     }
+                        // 3. FAALIYET_KOD tablosundan FIRMA_BASVURU_ID'ye göre verileri al
+                        string getFaaliyetQuery = "SELECT ID FROM FAALIYET_KOD WHERE FIRMA_BASVURU_ID = :basvuruId";
+                        OracleCommand getFaaliyetCmd = new OracleCommand(getFaaliyetQuery, connection);
+                        getFaaliyetCmd.Parameters.Add(new OracleParameter("basvuruId", basvuruId));
 
-                    long faaliyetId = Convert.ToInt64(faaliyetIdObj);
+                        object faaliyetIdObj = getFaaliyetCmd.ExecuteScalar();
+                        if (faaliyetIdObj == null)
+                        {
+                            MessageBox.Show("FAALIYET_KOD tablosunda bu başvuru için kayıt bulunamadı. Yeni kayıt oluşturuluyor.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // 4. FAALIYET_KOD tablosunu güncelle
-                    string updateFaaliyetQuery = @"
+                            string getMaxIdQuery = "SELECT NVL(MAX(ID), 0) + 1 FROM FAALIYET_KOD";
+                            OracleCommand getMaxIdCmd = new OracleCommand(getMaxIdQuery, connection);
+                            object newIdObj = getMaxIdCmd.ExecuteScalar();
+
+                            if (newIdObj == null)
+                            {
+                                MessageBox.Show("Yeni ID alınamadı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+
+                            long newId = Convert.ToInt64(newIdObj); // Yeni ID'yi al
+
+                            // Yeni faaliyet kodunu ekle
+                            string insertQuery = @"
+INSERT INTO FAALIYET_KOD (ID, FIRMA_BASVURU_ID, KODU, ACIKLAMA, FAALIYET_KODU_ID)
+VALUES (:id, :basvuruId, :kodu, :aciklama, :faaliyetKoduId)";
+
+                            OracleCommand insertCmd = new OracleCommand(insertQuery, connection);
+                            insertCmd.Parameters.Add(new OracleParameter("id", newId));  // Yeni ID set ediliyor
+                            insertCmd.Parameters.Add(new OracleParameter("basvuruId", basvuruId));
+                            insertCmd.Parameters.Add(new OracleParameter("kodu", naceKodu));
+                            insertCmd.Parameters.Add(new OracleParameter("aciklama", faaliyetAdi));
+                            insertCmd.Parameters.Add(new OracleParameter("faaliyetKoduId", faaliyetKoduId));
+
+                            int rowsInserted = insertCmd.ExecuteNonQuery();
+                            if (rowsInserted > 0)
+                            {
+                                MessageBox.Show("Yeni faaliyet kodu başarıyla eklendi.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Yeni faaliyet kodu eklenirken hata oluştu.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            return;
+                        }
+
+                        long faaliyetId = Convert.ToInt64(faaliyetIdObj);
+
+                        // 4. FAALIYET_KOD tablosunu güncelle
+                        string updateFaaliyetQuery = @"
                 UPDATE FAALIYET_KOD
                 SET KODU = :naceKodu, ACIKLAMA = :faaliyetAdi, FAALIYET_KODU_ID = :faaliyetKoduId
                 WHERE ID = :faaliyetId";
-                    OracleCommand updateFaaliyetCmd = new OracleCommand(updateFaaliyetQuery, connection);
-                    updateFaaliyetCmd.Parameters.Add(new OracleParameter("naceKodu", naceKodu));
-                    updateFaaliyetCmd.Parameters.Add(new OracleParameter("faaliyetAdi", faaliyetAdi));
-                    updateFaaliyetCmd.Parameters.Add(new OracleParameter("faaliyetKoduId", faaliyetKoduId));
-                    updateFaaliyetCmd.Parameters.Add(new OracleParameter("faaliyetId", faaliyetId));
+                        OracleCommand updateFaaliyetCmd = new OracleCommand(updateFaaliyetQuery, connection);
+                        updateFaaliyetCmd.Parameters.Add(new OracleParameter("naceKodu", naceKodu));
+                        updateFaaliyetCmd.Parameters.Add(new OracleParameter("faaliyetAdi", faaliyetAdi));
+                        updateFaaliyetCmd.Parameters.Add(new OracleParameter("faaliyetKoduId", faaliyetKoduId));
+                        updateFaaliyetCmd.Parameters.Add(new OracleParameter("faaliyetId", faaliyetId));
 
-                    int rowsAffected = updateFaaliyetCmd.ExecuteNonQuery();
-                    if (rowsAffected > 0)
-                    {
-                        MessageBox.Show("Faaliyet kodu başarıyla güncellendi.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Faaliyet kodu güncellenemedi.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        int rowsAffected = updateFaaliyetCmd.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Faaliyet kodu başarıyla güncellendi.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Faaliyet kodu güncellenemedi.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                 }
             }
@@ -3600,7 +3690,44 @@ VALUES (:id, :basvuruId, :kodu, :aciklama, :faaliyetKoduId)";
 
         private void button30_Click(object sender, EventArgs e)
         {
-            var basvuruNo = textBox22.Text;
+            string basvuruNo = textBox22.Text.Trim();
+            string columnName = comboBoxKolonlar.SelectedItem.ToString();
+            string newValue = textBox23.Text.Trim();
+
+            if (string.IsNullOrEmpty(basvuruNo) || string.IsNullOrEmpty(newValue))
+            {
+                MessageBox.Show("Lütfen tüm alanları doldurun.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                using (OracleConnection connection = new OracleConnection(connectionString))
+                {
+                    connection.Open();
+                    string updateQuery = $"UPDATE FIR_BASV SET {columnName} = :newValue WHERE BASVURU_NO = :basvuruNo";
+
+                    using (OracleCommand cmd = new OracleCommand(updateQuery, connection))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("newValue", newValue));
+                        cmd.Parameters.Add(new OracleParameter("basvuruNo", basvuruNo));
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Güncelleme başarılı!", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Başvuru bulunamadı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hata: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 
